@@ -1,7 +1,6 @@
 <template>
   <div class="navbar">
     <div class="logo">
-      <div class="logo-img"></div>
       <div class="logo-title">
         <h1>Platform Launch</h1>
       </div>
@@ -27,12 +26,7 @@
     display: flex;
     align-items: center;
     gap: 3.875rem;
-    .logo-img {
-      background-image: var(--logo);
-      background-repeat: no-repeat;
-      width: 160.528px;
-      height: 25.224px;
-    }
+
     .logo-title {
       h1 {
         font-size: 1.5rem;

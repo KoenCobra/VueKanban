@@ -1,8 +1,8 @@
 <template>
   <main>
-    <Navbar />
+    <Sidebar />
     <div class="main-layout">
-      <Sidebar />
+      <Navbar />
       <Columns />
     </div>
   </main>
@@ -10,13 +10,19 @@
 
 <script setup lang="ts">
 import Navbar from './components/navbar.vue'
+import Sidebar from '@/components/sidebar.vue'
 </script>
 
 <style scoped lang="scss">
 @import 'assets/sass/variables.scss';
 
+main {
+  display: flex;
+}
+
 .main-layout {
   background-color: var(--bodyBackground);
-  height: calc(100vh - 94.5px);
+  height: 100vh;
+  flex-grow: 1;
 }
 </style>
