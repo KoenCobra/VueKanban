@@ -8,6 +8,15 @@
   box-sizing: border-box;
 }
 
+button {
+  border: 0;
+  outline: none;
+  background-color: transparent;
+  border-radius: 100vh;
+  color: var(--white);
+  cursor: pointer;
+}
+
 /* Remove default margin */
 body,
 h1,
