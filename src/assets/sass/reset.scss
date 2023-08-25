@@ -1,3 +1,6 @@
+@import 'variables.scss';
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
 /* Box sizing rules */
 *,
 *::before,
@@ -26,7 +29,7 @@ ol[role='list'] {
 }
 
 /* Set core root defaults */
-html:focus-within {
+html {
   scroll-behavior: smooth;
 }
 
@@ -35,6 +38,7 @@ body {
   min-height: 100vh;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 /* A elements that don't have a class get default styles */

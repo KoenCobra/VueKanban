@@ -7,5 +7,16 @@
     {
       "path": "./tsconfig.app.json"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "baseUrl": ".",
+    "allowJs": true,
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    }
+  },
 }
