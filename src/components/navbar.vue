@@ -21,6 +21,7 @@
   display: flex;
   justify-content: space-between;
   padding: 1.25rem 2rem;
+  background-color: var(--white);
 
   .logo {
     display: flex;

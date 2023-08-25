@@ -11,9 +11,11 @@
   --red: #ea5555;
   --redHover: #ff9898;
   --logo: url('../images/logo-dark.svg');
+  --bodyBackground: #f4f7fd;
 }
 
 .dark {
   --logo: url('../images/logo-light.svg');
   --lines: #3e3f4e;
+  --bodyBackground: #2b2c37;
 }

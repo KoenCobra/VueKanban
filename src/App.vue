@@ -1,7 +1,9 @@
 <template>
   <main>
+    <Navbar />
     <div class="main-layout">
-      <Navbar />
+      <Sidebar />
+      <Columns />
     </div>
   </main>
 </template>
@@ -10,4 +12,11 @@
 import Navbar from './components/navbar.vue'
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+@import 'assets/sass/variables.scss';
+
+.main-layout {
+  background-color: var(--bodyBackground);
+  height: calc(100vh - 94.5px);
+}
+</style>
