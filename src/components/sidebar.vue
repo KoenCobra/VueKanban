@@ -113,5 +113,18 @@ import ThemeSwitcher from '@/components/theme-switcher.vue'
       }
     }
   }
+  .sidebar-footer {
+    padding-left: 2rem;
+
+    .hide-sidebar-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.9375rem;
+      margin-top: 1.15rem;
+      color: var(--mediumGrey);
+      font-size: 0.9375rem;
+      font-weight: 700;
+    }
+  }
 }
 </style>
