@@ -12,8 +12,15 @@
 import Navbar from './components/navbar.vue'
 import Sidebar from '@/components/sidebar.vue'
 import { useThemeStore } from './stores/themeStore'
+import { useBoardStore } from '@/stores/boardStore'
+import { onMounted } from 'vue'
 
 const themeStore = useThemeStore()
+const boardStore = useBoardStore()
+
+onMounted(async () => {
+  await boardStore.getBoards()
+})
 </script>
 
 <style scoped lang="scss">

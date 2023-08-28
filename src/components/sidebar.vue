@@ -49,17 +49,13 @@
 
 <script setup lang="ts">
 import ThemeSwitcher from '@/components/theme-switcher.vue'
-import { useBoardStore } from '@/stores/boardStore'
 import { useThemeStore } from '@/stores/themeStore'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
+import { useBoardStore } from '@/stores/boardStore'
 
+const boardStore = useBoardStore()
 const themeStore = useThemeStore()
 const isSideBarVisible = ref(true)
-const boardStore = useBoardStore()
-
-onMounted(async () => {
-  await boardStore.getBoards()
-})
 </script>
 
 <style scoped lang="scss">
