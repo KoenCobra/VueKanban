@@ -2,7 +2,7 @@
   <div class="sidebar">
     <div>
       <div class="logo">
-        <div class="logo-img"></div>
+        <div class="logo-img" :class="{ dark: themeStore.isDarkMode }"></div>
       </div>
       <div class="sidebar-title">
         <p>ALL BOARDS (nr)</p>
@@ -42,6 +42,9 @@
 
 <script setup lang="ts">
 import ThemeSwitcher from '@/components/theme-switcher.vue'
+import { useThemeStore } from '@/stores/themeStore'
+
+const themeStore = useThemeStore()
 </script>
 
 <style scoped lang="scss">
@@ -61,11 +64,15 @@ import ThemeSwitcher from '@/components/theme-switcher.vue'
   }
 
   .logo-img {
-    background-image: var(--logo);
+    background-image: url('../assets/images/logo-dark.svg');
     background-repeat: no-repeat;
     width: 160.528px;
     height: 25.224px;
     margin-bottom: 3.375rem;
+
+    &.dark {
+      background-image: url('../assets/images/logo-light.svg');
+    }
   }
 
   .sidebar-title {

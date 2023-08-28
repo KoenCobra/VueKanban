@@ -10,7 +10,6 @@
   --white: #fff;
   --red: #ea5555;
   --redHover: #ff9898;
-  --logo: url('../images/logo-dark.svg');
   --bodyBackground: #f4f7fd;
   --navBackground: var(var(--white));
   --textColor: var(--black);
@@ -18,7 +17,6 @@
 
 .dark {
   --textColor: var(--white);
-  --logo: url('../images/logo-light.svg');
   --lines: #3e3f4e;
   --bodyBackground: var(--veryDarkGrey);
   --navBackground: var(--darkGrey);
