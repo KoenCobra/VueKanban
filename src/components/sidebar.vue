@@ -48,7 +48,7 @@ import ThemeSwitcher from '@/components/theme-switcher.vue'
 @import '../assets/sass/variables.scss';
 
 .sidebar {
-  background-color: var(--white);
+  background-color: var(--navBackground);
   height: 100vh;
   width: 18.75rem;
   border-right: 1px solid var(--lines);

@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <main :class="{ dark: themeStore.isDarkMode }">
     <Sidebar />
     <div class="main-layout">
       <Navbar />
@@ -11,6 +11,9 @@
 <script setup lang="ts">
 import Navbar from './components/navbar.vue'
 import Sidebar from '@/components/sidebar.vue'
+import { useThemeStore } from './stores/themeStore'
+
+const themeStore = useThemeStore()
 </script>
 
 <style scoped lang="scss">

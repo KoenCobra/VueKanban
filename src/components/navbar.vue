@@ -20,7 +20,7 @@
   display: flex;
   justify-content: space-between;
   padding: 1.25rem 2rem;
-  background-color: var(--white);
+  background-color: var(--navBackground);
 
   .logo {
     display: flex;
@@ -31,6 +31,7 @@
       h1 {
         font-size: 1.5rem;
         font-weight: 700;
+        color: var(--textColor);
       }
     }
   }
