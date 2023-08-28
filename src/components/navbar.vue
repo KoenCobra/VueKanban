@@ -20,7 +20,7 @@
   display: flex;
   justify-content: space-between;
   padding: 1.25rem 2rem;
-  background-color: var(--navBackground);
+  background-color: var(--darkGreyBackground);
 
   .logo {
     display: flex;
