@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar">
+  <div class="sidebar" :class="{ active: !isSideBarVisible }">
     <div>
       <div class="logo">
         <div class="logo-img" :class="{ dark: themeStore.isDarkMode }"></div>
@@ -33,18 +33,23 @@
 
     <div class="sidebar-footer">
       <ThemeSwitcher />
-      <button class="hide-sidebar-btn">
+      <button class="hide-sidebar-btn" @click="isSideBarVisible = false">
         <img src="../assets/images/icon-hide-sidebar.svg" alt="hide-sidebar" />Hide Sidebar
       </button>
     </div>
   </div>
+  <button @click="isSideBarVisible = true" v-if="!isSideBarVisible" class="show-sidebar-btn">
+    <img src="../assets/images/icon-show-sidebar.svg" alt="" />
+  </button>
 </template>
 
 <script setup lang="ts">
 import ThemeSwitcher from '@/components/theme-switcher.vue'
 import { useThemeStore } from '@/stores/themeStore'
+import { ref } from 'vue'
 
 const themeStore = useThemeStore()
+const isSideBarVisible = ref(true)
 </script>
 
 <style scoped lang="scss">
@@ -53,12 +58,18 @@ const themeStore = useThemeStore()
 .sidebar {
   background-color: var(--navBackground);
   height: 100vh;
-  width: 18.75rem;
   border-right: 1px solid var(--lines);
   padding: 0 2rem 2rem 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  transition: margin 0.2s ease-in-out;
+  width: 18.75rem;
+  margin-left: 0;
+
+  &.active {
+    margin-left: -18.75rem;
+  }
   .logo {
     padding: 2rem 2rem 0;
   }
@@ -133,5 +144,23 @@ const themeStore = useThemeStore()
       font-weight: 700;
     }
   }
+}
+.show-sidebar-btn {
+  position: absolute;
+  bottom: 2rem;
+  left: 0;
+  padding: 1.5rem;
+  background-color: var(--mainPurple);
+  border-radius: 0 100vh 100vh 0;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.2s ease-out;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+  transform: translateX(-18.75rem);
 }
 </style>
