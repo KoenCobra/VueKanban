@@ -3,3 +3,23 @@
   background: var(--mainPurple) !important;
   box-shadow: none !important;
 }
+
+.p-dialog .p-dialog-header .p-dialog-header-icon:focus {
+  box-shadow: none !important;
+}
+
+.p-dialog {
+  width: 480px !important;
+}
+
+.p-dialog-title {
+  color: var(--textColor);
+}
+
+.p-dialog-header {
+  background: var(--bodyBackground) !important;
+}
+
+.p-dialog-content {
+  background: var(--bodyBackground) !important;
+}

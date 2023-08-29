@@ -45,6 +45,8 @@
   <button @click="isSideBarVisible = true" v-if="!isSideBarVisible" class="show-sidebar-btn">
     <img src="../assets/images/icon-show-sidebar.svg" alt="" />
   </button>
+
+  <GenericDialog :header="'Add New Board'" v-model="isDialogVisible"></GenericDialog>
 </template>
 
 <script setup lang="ts">
@@ -52,6 +54,7 @@ import ThemeSwitcher from '@/components/theme-switcher.vue'
 import { useThemeStore } from '@/stores/themeStore'
 import { ref } from 'vue'
 import { useBoardStore } from '@/stores/boardStore'
+import GenericDialog from '@/components/generic-dialog.vue'
 
 const boardStore = useBoardStore()
 const themeStore = useThemeStore()
