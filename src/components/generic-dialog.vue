@@ -1,6 +1,6 @@
 <template>
   <Transition>
-    <div v-if="props.isDialogVisible" class="dialog-container">
+    <div @click="handleClick($event)" v-if="props.isDialogVisible" class="dialog-container">
       <div class="dialog">
         <div class="dialog-header">
           <h2>{{ props.header }}</h2>
@@ -16,6 +16,13 @@
 
 <script setup lang="ts">
 const props = defineProps(['isDialogVisible', 'header'])
+const emit = defineEmits(['close'])
+
+const handleClick = (event: any) => {
+  if (event.target === event.currentTarget) {
+    emit('close')
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -41,9 +48,9 @@ const props = defineProps(['isDialogVisible', 'header'])
       justify-content: space-between;
       font-weight: 700;
       font-size: 1.125rem;
+      margin-bottom: 1.5rem;
 
       i {
-        color: var(-mediumGrey);
         cursor: pointer;
       }
     }
