@@ -1,20 +1,17 @@
 <template>
-  <div v-if="props.isDialogVisible" class="dialog-container">
-    <div class="dialog">
-      <div class="dialog-header">
-        <h2>{{ props.header }}</h2>
-        <i @click="$emit('close')" class="fa-regular fa-x"></i>
-      </div>
-      <div class="dialog-body">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus, libero? Voluptate, ad
-        fugiat quam modi at ab provident veritatis sed necessitatibus maxime unde nulla consequatur
-        voluptatibus eum? Et repudiandae impedit laudantium, voluptatum quisquam sit eius quis
-        praesentium ipsum ipsam fugiat cum incidunt magnam a tempora aspernatur vero alias
-        doloremque minus?
-        <slot />
+  <Transition>
+    <div v-if="props.isDialogVisible" class="dialog-container">
+      <div class="dialog">
+        <div class="dialog-header">
+          <h2>{{ props.header }}</h2>
+          <i @click="$emit('close')" class="fa-regular fa-x"></i>
+        </div>
+        <div class="dialog-body">
+          <slot />
+        </div>
       </div>
     </div>
-  </div>
+  </Transition>
 </template>
 
 <script setup lang="ts">
@@ -27,15 +24,49 @@ const props = defineProps(['isDialogVisible', 'header'])
   position: absolute;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.5);
+  display: grid;
+  place-items: center;
   z-index: 1;
+  color: var(--textColor);
+
   .dialog {
     background-color: var(--bodyBackground);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: 480px;
     z-index: 2;
+    padding: 2rem;
+    border-radius: 6px;
+
+    .dialog-header {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      font-size: 1.125rem;
+
+      i {
+        color: var(-mediumGrey);
+        cursor: pointer;
+      }
+    }
   }
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.2s ease-out;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+
+.v-enter-active .dialog,
+.v-leave-active .dialog {
+  transition: all 0.2s ease-out;
+}
+
+.v-enter-from .dialog,
+.v-leave-to .dialog {
+  transform: scale(0.7);
 }
 </style>
