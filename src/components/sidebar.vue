@@ -46,7 +46,11 @@
     <img src="../assets/images/icon-show-sidebar.svg" alt="" />
   </button>
 
-  <GenericDialog :header="'Add New Board'" v-model="isDialogVisible"></GenericDialog>
+  <GenericDialog
+    :header="'Add New Board'"
+    :is-dialog-visible="isDialogVisible"
+    @close="isDialogVisible = false"
+  ></GenericDialog>
 </template>
 
 <script setup lang="ts">
