@@ -50,7 +50,12 @@
     :header="'Add New Board'"
     :is-dialog-visible="isDialogVisible"
     @close="isDialogVisible = false"
-  ></GenericDialog>
+  >
+    <Form @submit="onSubmit" :validation-schema="schema">
+      <InputText name="name" />
+      <button type="submit">submit</button>
+    </Form>
+  </GenericDialog>
 </template>
 
 <script setup lang="ts">
@@ -59,11 +64,22 @@ import { useThemeStore } from '@/stores/themeStore'
 import { ref } from 'vue'
 import { useBoardStore } from '@/stores/boardStore'
 import GenericDialog from '@/components/generic-dialog.vue'
+import * as Yup from 'yup'
+import { Form } from 'vee-validate'
+import InputText from 'primevue/inputtext'
 
 const boardStore = useBoardStore()
 const themeStore = useThemeStore()
 const isSideBarVisible = ref(true)
 const isDialogVisible = ref(false)
+
+const schema = Yup.object().shape({
+  name: Yup.string().required()
+})
+
+const onSubmit = async (values: any) => {
+  console.log(values)
+}
 </script>
 
 <style scoped lang="scss">
