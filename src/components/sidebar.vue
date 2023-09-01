@@ -120,7 +120,10 @@ const onSubmit = (values: any) => {
   newBoard.value.name = values.name
   boardStore.boards.push(newBoard.value)
   isDialogVisible.value = false
-  boardStore.selectedBoard = boardStore.boards[0]
+
+  if (!boardStore.selectedBoard) {
+    boardStore.selectedBoard = boardStore.boards[0]
+  }
 }
 
 const openDialog = () => {
