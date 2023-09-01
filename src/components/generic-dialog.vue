@@ -3,7 +3,7 @@
     <div @click="handleClick($event)" v-if="props.isDialogVisible" class="dialog-container">
       <div class="dialog">
         <div class="dialog-header">
-          <h2>{{ props.header }}</h2>
+          <h2 :class="props.headerClass">{{ props.header }}</h2>
           <img @click="$emit('close')" src="../assets/images/icon-cross.svg" alt="" />
         </div>
         <div class="dialog-body">
@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps(['isDialogVisible', 'header'])
+const props = defineProps(['isDialogVisible', 'header', 'headerClass'])
 const emit = defineEmits(['close'])
 
 const handleClick = (event: any) => {
@@ -55,6 +55,12 @@ const handleClick = (event: any) => {
         right: 20px;
         top: 20px;
       }
+    }
+
+    .dialog-body {
+      color: var(--mediumGrey);
+      font-size: 0.8125rem;
+      font-weight: 500;
     }
   }
 }

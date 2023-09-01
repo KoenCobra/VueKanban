@@ -60,10 +60,12 @@
       />
       <div class="columns">
         <label>Board Columns</label>
-        <div v-for="(column, index) of newBoard.columns" :key="index" class="column-input">
-          <input v-model="column.name" />
-          <img src="../assets/images/icon-cross.svg" @click="newBoard.columns.splice(index, 1)" />
-        </div>
+        <TransitionGroup name="list">
+          <div v-for="(column, index) of newBoard.columns" :key="index" class="column-input">
+            <input v-model="column.name" />
+            <img src="../assets/images/icon-cross.svg" @click="newBoard.columns.splice(index, 1)" />
+          </div>
+        </TransitionGroup>
         <button type="button" @click="addColumn()" class="add-column-btn">+ Add New Column</button>
       </div>
       <button class="submit-btn" type="submit">Create New Board</button>
@@ -168,7 +170,6 @@ const openDialog = () => {
     ul {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
 
       li {
         display: flex;
@@ -178,6 +179,7 @@ const openDialog = () => {
         font-size: 0.9375rem;
         padding: 1rem 2rem;
         font-weight: 700;
+        border-radius: 0 100vh 100vh 0;
         color: var(--mediumGrey);
         cursor: pointer;
 
@@ -187,7 +189,11 @@ const openDialog = () => {
             fill: var(--white);
           }
           color: var(--white);
-          border-radius: 0 100vh 100vh 0;
+        }
+
+        &:hover:not(.active) {
+          background-color: rgba(#635fc7, 0.1);
+          color: var(--mainPurple);
         }
       }
     }
@@ -284,5 +290,23 @@ label {
 .slide-enter-from,
 .slide-leave-to {
   transform: translateX(-18.75rem);
+}
+
+.list-move, /* apply transition to moving elements */
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list-leave-active {
+  position: absolute;
 }
 </style>
