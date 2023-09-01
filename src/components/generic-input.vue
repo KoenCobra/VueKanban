@@ -89,6 +89,8 @@ const {
       background: transparent;
       padding: 0.5rem 1rem;
       color: var(--textColor);
+      font-size: 0.8125rem;
+      font-weight: 500;
 
       &:focus-within {
         outline: 1px solid rgba(130, 143, 163, 0.25);

@@ -4,7 +4,7 @@
       <div class="dialog">
         <div class="dialog-header">
           <h2>{{ props.header }}</h2>
-          <i @click="$emit('close')" class="fa-regular fa-x"></i>
+          <img @click="$emit('close')" src="../assets/images/icon-cross.svg" alt="" />
         </div>
         <div class="dialog-body">
           <slot />
@@ -42,16 +42,18 @@ const handleClick = (event: any) => {
     z-index: 2;
     padding: 2rem;
     border-radius: 6px;
+    position: relative;
 
     .dialog-header {
-      display: flex;
-      justify-content: space-between;
       font-weight: 700;
       font-size: 1.125rem;
       margin-bottom: 1.5rem;
 
-      i {
+      img {
         cursor: pointer;
+        position: absolute;
+        right: 20px;
+        top: 20px;
       }
     }
   }

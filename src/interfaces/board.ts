@@ -1,6 +1,6 @@
-import type { Columnn } from "./column";
+import type { BoardColumn } from "./BoardColumn";
 
 export interface Board {
  name?: string,
- colmuns: Columnn[]
+ columns: BoardColumn[]
 }

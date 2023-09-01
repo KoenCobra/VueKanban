@@ -58,6 +58,14 @@
         label="Board Name"
         name="name"
       />
+      <div class="columns">
+        <label>Board Columns</label>
+        <div v-for="(column, index) of newBoard.columns" :key="index" class="column-input">
+          <input v-model="column.name" />
+          <img src="../assets/images/icon-cross.svg" @click="newBoard.columns.splice(index, 1)" />
+        </div>
+        <button type="button" @click="addColumn()" class="add-column-btn">+ Add New Column</button>
+      </div>
       <button class="submit-btn" type="submit">Create New Board</button>
     </Form>
   </GenericDialog>
@@ -66,24 +74,36 @@
 <script setup lang="ts">
 import ThemeSwitcher from '@/components/theme-switcher.vue'
 import { useThemeStore } from '@/stores/themeStore'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useBoardStore } from '@/stores/boardStore'
 import GenericDialog from '@/components/generic-dialog.vue'
 import * as Yup from 'yup'
 import { Form } from 'vee-validate'
 import GenericInput from './generic-input.vue'
+import type { Board } from '@/interfaces/board'
 
 const boardStore = useBoardStore()
 const themeStore = useThemeStore()
 const isSideBarVisible = ref(true)
 const isDialogVisible = ref(false)
 
+const newBoard = ref<Board>({} as Board)
+
+onMounted(() => {
+  newBoard.value = { name: '', columns: [{ name: 'ToDo' }, { name: 'Doing' }] }
+})
+
+const addColumn = () => {
+  newBoard.value.columns.push({ name: '' })
+}
+
 const schema = Yup.object().shape({
   name: Yup.string().required(`Can't be empty`)
 })
 
 const onSubmit = async (values: any) => {
-  console.log(values)
+  newBoard.value.name = values.name
+  boardStore.boards.push(newBoard.value)
 }
 </script>
 
@@ -184,6 +204,53 @@ const onSubmit = async (values: any) => {
     }
   }
 }
+
+label {
+  color: var(--labelColor);
+  font-size: 0.75rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.columns {
+  display: flex;
+  flex-direction: column;
+  .add-column-btn {
+    color: var(--mainPurple);
+    font-size: 0.8125rem;
+    padding-block: 0.5rem;
+    font-weight: 700;
+    background: rgba(99, 95, 199, 0.1);
+  }
+
+  .column-input {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    input {
+      width: 100%;
+      border-radius: 4px;
+      border: 0;
+      outline: 1px solid rgba(130, 143, 163, 0.25);
+      background: transparent;
+      padding: 0.5rem 1rem;
+      color: var(--textColor);
+      font-size: 0.8125rem;
+      font-weight: 500;
+
+      &:focus-within {
+        outline: 1px solid rgba(130, 143, 163, 0.25);
+      }
+    }
+
+    img {
+      cursor: pointer;
+    }
+  }
+}
+
 .show-sidebar-btn {
   position: absolute;
   bottom: 2rem;
