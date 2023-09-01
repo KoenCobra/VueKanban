@@ -28,6 +28,11 @@
   >
     Are you sure you want to delete the ‘Platform Launch’ board? This action will remove all columns
     and tasks and cannot be reversed.
+
+    <div class="remove-board-footer">
+      <button class="delete-board-btn">Delete</button>
+      <button class="cancel-delete-board-btn">Cancel</button>
+    </div>
   </GenericDialog>
 </template>
 

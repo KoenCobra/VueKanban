@@ -29,3 +29,30 @@
   font-size: 1.125rem;
   font-weight: 700;
 }
+
+.remove-board-footer {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+
+  .delete-board-btn {
+    width: 100%;
+    background-color: var(--red);
+    transition: $transition;
+    &:hover {
+      background-color: var(--redHover);
+    }
+  }
+  .cancel-delete-board-btn {
+    width: 100%;
+    background-color: var(--lightPurpleBtnBackground);
+    color: var(--mainPurple);
+    transition: $transition;
+
+    &:hover {
+      background-color: var(--lightPurpleHover);
+    }
+  }
+}

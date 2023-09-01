@@ -240,9 +240,8 @@ label {
   .add-column-btn {
     color: var(--mainPurple);
     font-size: 0.8125rem;
-    padding-block: 0.5rem;
     font-weight: 700;
-    background: var(--addColumnBtnBackground);
+    background: var(--lightPurpleBtnBackground);
   }
 
   .column-input {
