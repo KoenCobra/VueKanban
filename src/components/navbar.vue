@@ -27,8 +27,8 @@
     header-class="delete-board-header"
     header="Delete this board?"
   >
-    Are you sure you want to delete the ‘{{ boardStore.selectedBoard?.name }}’ board? This action
-    will remove all columns and tasks and cannot be reversed.
+    Are you sure you want to delete the <b> ‘{{ boardStore.selectedBoard?.name }}’ </b> board? This
+    action will remove all columns and tasks and cannot be reversed.
 
     <div class="remove-board-footer">
       <button @click="deleteBoard" class="delete-board-btn">Delete</button>
