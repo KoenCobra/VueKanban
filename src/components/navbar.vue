@@ -3,6 +3,7 @@
     <div class="logo">
       <div class="logo-title">
         <h1>Platform Launch</h1>
+        <p></p>
       </div>
     </div>
     <div class="navbar-btns">
@@ -26,12 +27,14 @@
     header-class="delete-board-header"
     header="Delete this board?"
   >
-    Are you sure you want to delete the ‘Platform Launch’ board? This action will remove all columns
-    and tasks and cannot be reversed.
+    Are you sure you want to delete the ‘{{ boardStore.selectedBoard?.name }}’ board? This action
+    will remove all columns and tasks and cannot be reversed.
 
     <div class="remove-board-footer">
-      <button class="delete-board-btn">Delete</button>
-      <button class="cancel-delete-board-btn">Cancel</button>
+      <button @click="deleteBoard" class="delete-board-btn">Delete</button>
+      <button @click="isDeleteBoardConfirmationVisible = false" class="cancel-delete-board-btn">
+        Cancel
+      </button>
     </div>
   </GenericDialog>
 </template>
@@ -39,10 +42,12 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
 import GenericDialog from '@/components/generic-dialog.vue'
+import { useBoardStore } from '@/stores/boardStore'
 
 const isCrudDropdownVisble = ref(false)
 const isDeleteBoardConfirmationVisible = ref(false)
 const dropdownToggleBtn = ref()
+const boardStore = useBoardStore()
 
 const handleClickOutside = (event: any) => {
   if (
@@ -51,6 +56,15 @@ const handleClickOutside = (event: any) => {
     isCrudDropdownVisble.value
   ) {
     isCrudDropdownVisble.value = false
+  }
+}
+
+const deleteBoard = () => {
+  if (boardStore.selectedBoard) {
+    const index = boardStore.boards.indexOf(boardStore.selectedBoard)
+    boardStore.boards.splice(index, 1)
+    isDeleteBoardConfirmationVisible.value = false
+    boardStore.selectedBoard = boardStore.boards[0]
   }
 }
 
