@@ -37,7 +37,7 @@ const handleClick = (event: any) => {
   color: var(--textColor);
 
   .dialog {
-    background-color: var(--bodyBackground);
+    background-color: var(--dialogBackground);
     width: 480px;
     z-index: 2;
     padding: 2rem;

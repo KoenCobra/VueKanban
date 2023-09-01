@@ -51,8 +51,13 @@
     :is-dialog-visible="isDialogVisible"
     @close="isDialogVisible = false"
   >
-    <Form @submit="onSubmit" :validation-schema="schema">
-      <InputText name="name" />
+    <Form @submit="onSubmit" :validation-schema="schema" class="form-body">
+      <GenericInput
+        placeholder="e.g. Web Design"
+        :autofocus="true"
+        label="Board Name"
+        name="name"
+      />
       <button type="submit">submit</button>
     </Form>
   </GenericDialog>
@@ -66,7 +71,7 @@ import { useBoardStore } from '@/stores/boardStore'
 import GenericDialog from '@/components/generic-dialog.vue'
 import * as Yup from 'yup'
 import { Form } from 'vee-validate'
-import InputText from 'primevue/inputtext'
+import GenericInput from './generic-input.vue'
 
 const boardStore = useBoardStore()
 const themeStore = useThemeStore()
@@ -74,7 +79,7 @@ const isSideBarVisible = ref(true)
 const isDialogVisible = ref(false)
 
 const schema = Yup.object().shape({
-  name: Yup.string().required()
+  name: Yup.string().required('Board name is required')
 })
 
 const onSubmit = async (values: any) => {

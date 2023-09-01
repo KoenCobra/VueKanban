@@ -58,4 +58,31 @@ const {
 })
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+@import '../assets/sass/variables.scss';
+.input-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    color: var(--labelColor);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  input {
+    border-radius: 4px;
+    border: 1px solid rgba(130, 143, 163, 0.25);
+    background: transparent;
+    padding: 0.5rem 1rem;
+  }
+
+  ::placeholder {
+    color: var(--placeholderText);
+    font-weight: 500;
+    font-size: 0.8125rem;
+    opacity: 0.4;
+  }
+}
+</style>

@@ -13,6 +13,9 @@
   --bodyBackground: #f4f7fd;
   --navBackground: var(var(--white));
   --textColor: var(--black);
+  --labelColor: var(--mediumGrey);
+  --dialogBackground: var(--white);
+  --placeholderText: var(--black);
 }
 
 .dark {
@@ -20,6 +23,9 @@
   --lines: #3e3f4e;
   --bodyBackground: var(--veryDarkGrey);
   --darkGreyBackground: var(--darkGrey);
+  --labelColor: var(--white);
+  --dialogBackground: var(--darkGrey);
+  --placeholderText: var(--white);
 }
 
 $transition: all 0.2s linear;
