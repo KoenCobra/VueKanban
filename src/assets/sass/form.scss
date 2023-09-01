@@ -3,4 +3,11 @@
 .form-body {
   display: grid;
   gap: 1.5rem;
+
+  .submit-btn {
+    background-color: var(--mainPurple);
+    padding-block: 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
 }

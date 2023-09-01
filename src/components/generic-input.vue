@@ -1,18 +1,20 @@
 <template>
   <div :class="{ 'has-error': errorMessage }" class="input-field">
     <label :for="name">{{ label }}</label>
-    <input
-      :name="name"
-      :id="name"
-      :type="type"
-      :value="inputValue"
-      :placeholder="placeholder"
-      @input="handleChange"
-    />
+    <div class="input-error-container">
+      <input
+        :name="name"
+        :id="name"
+        :type="type"
+        :value="inputValue"
+        :placeholder="placeholder"
+        @input="handleChange"
+      />
 
-    <p class="error-message" v-show="errorMessage">
-      {{ errorMessage }}
-    </p>
+      <p class="error-message" v-show="errorMessage">
+        {{ errorMessage }}
+      </p>
+    </div>
   </div>
 </template>
 
@@ -65,17 +67,43 @@ const {
   flex-direction: column;
   gap: 0.5rem;
 
+  &.has-error {
+    input {
+      border: 1px solid var(--red) !important;
+    }
+  }
+
   label {
     color: var(--labelColor);
     font-size: 0.75rem;
     font-weight: 700;
   }
 
-  input {
-    border-radius: 4px;
-    border: 1px solid rgba(130, 143, 163, 0.25);
-    background: transparent;
-    padding: 0.5rem 1rem;
+  .input-error-container {
+    position: relative;
+    input {
+      width: 100%;
+      border-radius: 4px;
+      border: 0;
+      outline: 1px solid rgba(130, 143, 163, 0.25);
+      background: transparent;
+      padding: 0.5rem 1rem;
+      color: var(--textColor);
+
+      &:focus-within {
+        outline: 1px solid rgba(130, 143, 163, 0.25);
+      }
+    }
+
+    .error-message {
+      color: var(--red);
+      top: 0;
+      right: 0.5rem;
+      transform: translateY(50%);
+      position: absolute;
+      font-size: 0.8125rem;
+      font-weight: 500;
+    }
   }
 
   ::placeholder {

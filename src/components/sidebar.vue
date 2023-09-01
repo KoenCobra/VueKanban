@@ -58,7 +58,7 @@
         label="Board Name"
         name="name"
       />
-      <button type="submit">submit</button>
+      <button class="submit-btn" type="submit">Create New Board</button>
     </Form>
   </GenericDialog>
 </template>
@@ -79,7 +79,7 @@ const isSideBarVisible = ref(true)
 const isDialogVisible = ref(false)
 
 const schema = Yup.object().shape({
-  name: Yup.string().required('Board name is required')
+  name: Yup.string().required(`Can't be empty`)
 })
 
 const onSubmit = async (values: any) => {
