@@ -16,6 +16,7 @@
   --labelColor: var(--mediumGrey);
   --dialogBackground: var(--white);
   --placeholderText: var(--black);
+  --addColumnBtnBackground: rgba(99, 95, 199, 0.1);
 }
 
 .dark {
@@ -26,6 +27,7 @@
   --labelColor: var(--white);
   --dialogBackground: var(--darkGrey);
   --placeholderText: var(--white);
+  --addColumnBtnBackground: var(--white);
 }
 
 $transition: all 0.2s linear;

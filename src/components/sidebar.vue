@@ -98,8 +98,14 @@ const schema = Yup.object().shape({
 })
 
 const onSubmit = async (values: any) => {
+  boardStore.boards.forEach((board) => {
+    if (board.name === values.name) {
+      alert('there is already a board with the name: ' + values.name)
+    }
+  })
   newBoard.value.name = values.name
   boardStore.boards.push(newBoard.value)
+  isDialogVisible.value = false
 }
 
 const openDialog = () => {
@@ -221,7 +227,7 @@ label {
     font-size: 0.8125rem;
     padding-block: 0.5rem;
     font-weight: 700;
-    background: rgba(99, 95, 199, 0.1);
+    background: var(--addColumnBtnBackground);
   }
 
   .column-input {
