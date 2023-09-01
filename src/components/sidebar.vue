@@ -81,6 +81,9 @@ import * as Yup from 'yup'
 import { Form } from 'vee-validate'
 import GenericInput from './generic-input.vue'
 import type { Board } from '@/interfaces/board'
+import { useToast } from 'primevue/usetoast'
+
+const toast = useToast()
 
 const boardStore = useBoardStore()
 const themeStore = useThemeStore()
@@ -97,12 +100,18 @@ const schema = Yup.object().shape({
   name: Yup.string().required(`Can't be empty`)
 })
 
-const onSubmit = async (values: any) => {
-  boardStore.boards.forEach((board) => {
+const onSubmit = (values: any) => {
+  for (let board of boardStore.boards) {
     if (board.name === values.name) {
-      alert('there is already a board with the name: ' + values.name)
+      toast.add({
+        severity: 'info',
+        detail: 'there is already a board with the name: ' + values.name,
+        life: 3000
+      })
+      return
     }
-  })
+  }
+
   newBoard.value.name = values.name
   boardStore.boards.push(newBoard.value)
   isDialogVisible.value = false

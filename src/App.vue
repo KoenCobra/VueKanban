@@ -6,6 +6,7 @@
       <Columns />
     </div>
   </main>
+  <Toast position="bottom-right" />
 </template>
 
 <script setup lang="ts">
@@ -14,6 +15,7 @@ import Sidebar from '@/components/sidebar.vue'
 import { useThemeStore } from './stores/themeStore'
 import { useBoardStore } from '@/stores/boardStore'
 import { onMounted } from 'vue'
+import Toast from 'primevue/toast'
 
 const themeStore = useThemeStore()
 const boardStore = useBoardStore()
