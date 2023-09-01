@@ -22,6 +22,7 @@ const boardStore = useBoardStore()
 
 onMounted(async () => {
   await boardStore.getBoards()
+  boardStore.selectedBoard = boardStore.boards[0]
 })
 </script>
 

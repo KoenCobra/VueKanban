@@ -10,9 +10,10 @@
       <div class="board-list">
         <ul>
           <li
-            v-for="(board, index) of boardStore.boards"
+            @click="boardStore.selectedBoard = board"
+            v-for="board of boardStore.boards"
             :key="board.name"
-            :class="{ active: index === 0 }"
+            :class="{ active: boardStore.selectedBoard?.name === board.name }"
           >
             <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -76,7 +77,7 @@
 <script setup lang="ts">
 import ThemeSwitcher from '@/components/theme-switcher.vue'
 import { useThemeStore } from '@/stores/themeStore'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useBoardStore } from '@/stores/boardStore'
 import GenericDialog from '@/components/generic-dialog.vue'
 import * as Yup from 'yup'
@@ -93,6 +94,8 @@ const isSideBarVisible = ref(true)
 const isDialogVisible = ref(false)
 
 const newBoard = ref<Board>({ name: '', columns: [{ name: 'ToDo' }, { name: 'Doing' }] })
+
+onMounted(() => {})
 
 const addColumn = () => {
   newBoard.value.columns.push({ name: '' })
