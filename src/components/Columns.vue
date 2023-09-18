@@ -2,21 +2,20 @@
   <div class="columns-section">
     <div class="column" v-for="(column, index) in boardStore.selectedBoard?.columns" :key="index">
       <div class="column-name">
-        <div
-          :style="`background-color: ${'#' + ((Math.random() * 0xffffff) << 0).toString(16)};`"
-          class="column-color"
-        ></div>
+        <div :style="`background-color: ${column.color};`" class="column-color"></div>
         <p>{{ column.name }} ({{ column.tasks?.length }})</p>
       </div>
-      <div class="tasks">
-        <div class="task" v-for="(task, index) in column.tasks" :key="index">
-          <p>{{ task.title }}</p>
-          <p class="subtask-number">
-            ({{ task.subtasks?.filter((s) => s.isCompleted).length }} of
-            {{ task.subtasks?.length }} subtasks)
-          </p>
-        </div>
-      </div>
+      <draggable class="tasks" :list="column.tasks" group="people" itemKey="title" :animation="300">
+        <template #item="{ element }">
+          <div class="task">
+            <p>{{ element.title }}</p>
+            <p class="subtask-number">
+              ({{ element.subtasks?.filter((s: any) => s.isCompleted).length }} of
+              {{ element.subtasks?.length }} subtasks)
+            </p>
+          </div>
+        </template>
+      </draggable>
     </div>
     <div @click="boardStore.isEditBoardVisible = true" class="add-column">+ New Column</div>
   </div>
@@ -24,8 +23,16 @@
 
 <script setup lang="ts">
 import { useBoardStore } from '@/stores/boardStore'
+import { watchEffect } from 'vue'
+import draggable from 'vuedraggable'
 
 const boardStore = useBoardStore()
+
+watchEffect(() => {
+  boardStore.selectedBoard?.columns.forEach((column) => {
+    column.color = '#' + ((Math.random() * 0xffffff) << 0).toString(16)
+  })
+})
 </script>
 
 <style scoped lang="scss">
@@ -40,7 +47,6 @@ const boardStore = useBoardStore()
   width: calc(100vw - 18.75rem);
   .column {
     width: 280px;
-
     .column-name {
       margin-bottom: 1.25rem;
       display: flex;
@@ -63,12 +69,14 @@ const boardStore = useBoardStore()
       display: flex;
       flex-direction: column;
       gap: 1.25rem;
+      min-height: 20rem;
     }
     .task {
       border-radius: 8px;
       background-color: var(--darkGreyBackground);
       box-shadow: 0px 4px 6px 0px rgba(54, 78, 126, 0.1);
       padding: 1.5rem 1rem 1rem;
+      cursor: pointer;
 
       p {
         font-size: 0.9375rem;

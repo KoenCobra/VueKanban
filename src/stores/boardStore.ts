@@ -13,7 +13,6 @@ export const useBoardStore = defineStore('board', () => {
   try {
    const response = await axios.get('data.json');
    boards.value = response.data.boards;
-   console.log(boards.value);
 
   } catch (error) {
    console.error('Error fetching boards:', error);
