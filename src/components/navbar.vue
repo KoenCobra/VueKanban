@@ -101,7 +101,7 @@ const schema = Yup.object().shape({
 })
 
 const addColumn = () => {
-  boardStore.selectedBoard?.columns.push({ name: '' })
+  boardStore.selectedBoard?.columns.push({ name: '', tasks: [] })
 }
 
 const onSubmit = (values: any) => {
