@@ -14,7 +14,7 @@
 
       <Transition>
         <div v-if="isCrudDropdownVisble" class="crud-dropdown">
-          <p>Edit Board</p>
+          <p @click="isEditBoardVisible = true">Edit Board</p>
           <p @click="isDeleteBoardConfirmationVisible = true" class="delete-text">Delete Board</p>
         </div>
       </Transition>
@@ -37,15 +37,53 @@
       </button>
     </div>
   </GenericDialog>
+
+  <GenericDialog
+    @close="isEditBoardVisible = false"
+    :is-dialog-visible="isEditBoardVisible"
+    header="Edit Board"
+  >
+    <Form @submit="onSubmit" :validation-schema="schema" class="form-body">
+      <GenericInput
+        placeholder="e.g. Web Design"
+        :autofocus="true"
+        label="Board Name"
+        name="name"
+        :value="boardStore.selectedBoard?.name"
+      />
+      <div class="columns">
+        <label>Board Columns</label>
+        <TransitionGroup name="list">
+          <div
+            v-for="(column, index) of boardStore.selectedBoard?.columns"
+            :key="index"
+            class="column-input"
+          >
+            <input v-model="column.name" />
+            <img
+              src="../assets/images/icon-cross.svg"
+              @click="boardStore.selectedBoard?.columns.splice(index, 1)"
+            />
+          </div>
+        </TransitionGroup>
+        <button type="button" @click="addColumn()" class="add-column-btn">+ Add New Column</button>
+      </div>
+      <button class="submit-btn" type="submit">Save Changes</button>
+    </Form>
+  </GenericDialog>
 </template>
 
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
 import GenericDialog from '@/components/generic-dialog.vue'
 import { useBoardStore } from '@/stores/boardStore'
+import * as Yup from 'yup'
+import { Form } from 'vee-validate'
+import GenericInput from './generic-input.vue'
 
 const isCrudDropdownVisble = ref(false)
 const isDeleteBoardConfirmationVisible = ref(false)
+const isEditBoardVisible = ref(false)
 const dropdownToggleBtn = ref()
 const boardStore = useBoardStore()
 
@@ -57,6 +95,22 @@ const handleClickOutside = (event: any) => {
   ) {
     isCrudDropdownVisble.value = false
   }
+}
+
+const schema = Yup.object().shape({
+  name: Yup.string().required(`Can't be empty`)
+})
+
+const addColumn = () => {
+  boardStore.selectedBoard?.columns.push({ name: '' })
+}
+
+const onSubmit = (values: any) => {
+  if (boardStore.selectedBoard) {
+    boardStore.selectedBoard.name = values.name
+  }
+
+  isEditBoardVisible.value = false
 }
 
 const deleteBoard = () => {
@@ -134,17 +188,6 @@ onUnmounted(() => {
         color: var(--red);
       }
     }
-  }
-
-  .v-enter-active,
-  .v-leave-active {
-    transition: all 0.2s ease-out;
-  }
-
-  .v-enter-from,
-  .v-leave-to {
-    opacity: 0;
-    transform: scale(0.7);
   }
 }
 </style>

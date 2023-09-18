@@ -10,3 +10,59 @@
     font-weight: 700;
   }
 }
+
+.columns {
+  display: flex;
+  flex-direction: column;
+  .add-column-btn {
+    color: var(--mainPurple);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    background: var(--lightPurpleBtnBackground);
+  }
+
+  .column-input {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    input {
+      width: 100%;
+      border-radius: 4px;
+      border: 0;
+      outline: 1px solid rgba(130, 143, 163, 0.25);
+      background: transparent;
+      padding: 0.5rem 1rem;
+      color: var(--textColor);
+      font-size: 0.8125rem;
+      font-weight: 500;
+
+      &:focus-within {
+        outline: 1px solid rgba(130, 143, 163, 0.25);
+      }
+    }
+
+    img {
+      cursor: pointer;
+    }
+  }
+}
+
+.list-move, /* apply transition to moving elements */
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list-leave-active {
+  position: absolute;
+}

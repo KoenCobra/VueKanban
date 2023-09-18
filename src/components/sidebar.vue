@@ -77,7 +77,7 @@
 <script setup lang="ts">
 import ThemeSwitcher from '@/components/theme-switcher.vue'
 import { useThemeStore } from '@/stores/themeStore'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { useBoardStore } from '@/stores/boardStore'
 import GenericDialog from '@/components/generic-dialog.vue'
 import * as Yup from 'yup'
@@ -94,8 +94,6 @@ const isSideBarVisible = ref(true)
 const isDialogVisible = ref(false)
 
 const newBoard = ref<Board>({ name: '', columns: [{ name: 'ToDo' }, { name: 'Doing' }] })
-
-onMounted(() => {})
 
 const addColumn = () => {
   newBoard.value.columns.push({ name: '' })
@@ -241,44 +239,6 @@ label {
   font-weight: 700;
 }
 
-.columns {
-  display: flex;
-  flex-direction: column;
-  .add-column-btn {
-    color: var(--mainPurple);
-    font-size: 0.8125rem;
-    font-weight: 700;
-    background: var(--lightPurpleBtnBackground);
-  }
-
-  .column-input {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-
-    input {
-      width: 100%;
-      border-radius: 4px;
-      border: 0;
-      outline: 1px solid rgba(130, 143, 163, 0.25);
-      background: transparent;
-      padding: 0.5rem 1rem;
-      color: var(--textColor);
-      font-size: 0.8125rem;
-      font-weight: 500;
-
-      &:focus-within {
-        outline: 1px solid rgba(130, 143, 163, 0.25);
-      }
-    }
-
-    img {
-      cursor: pointer;
-    }
-  }
-}
-
 .show-sidebar-btn {
   position: absolute;
   bottom: 2rem;
@@ -286,33 +246,5 @@ label {
   padding: 1.5rem;
   background-color: var(--mainPurple);
   border-radius: 0 100vh 100vh 0;
-}
-
-.slide-enter-active,
-.slide-leave-active {
-  transition: all 0.2s ease-out;
-}
-
-.slide-enter-from,
-.slide-leave-to {
-  transform: translateX(-18.75rem);
-}
-
-.list-move, /* apply transition to moving elements */
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.5s ease;
-}
-
-.list-enter-from,
-.list-leave-to {
-  opacity: 0;
-  transform: translateX(30px);
-}
-
-/* ensure leaving items are taken out of layout flow so that moving
-   animations can be calculated correctly. */
-.list-leave-active {
-  position: absolute;
 }
 </style>

@@ -1,0 +1,16 @@
+.delete-board-header {
+  color: var(--red);
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.2s ease-out;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+  transform: scale(0.7);
+}
