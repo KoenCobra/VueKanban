@@ -10,10 +10,10 @@
 </template>
 
 <script setup lang="ts">
-import Navbar from './components/navbar.vue'
+import Navbar from '@/components/navbar.vue'
 import Sidebar from '@/components/sidebar.vue'
-import Columns from '@/components/Columns.vue'
-import { useThemeStore } from './stores/themeStore'
+import Columns from '@/components/columns.vue'
+import { useThemeStore } from '@/stores/themeStore'
 import { useBoardStore } from '@/stores/boardStore'
 import { onMounted } from 'vue'
 import Toast from 'primevue/toast'

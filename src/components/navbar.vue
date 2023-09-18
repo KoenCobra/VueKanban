@@ -14,7 +14,7 @@
 
       <Transition>
         <div v-if="isCrudDropdownVisble" class="crud-dropdown">
-          <p @click="isEditBoardVisible = true">Edit Board</p>
+          <p @click="boardStore.isEditBoardVisible = true">Edit Board</p>
           <p @click="isDeleteBoardConfirmationVisible = true" class="delete-text">Delete Board</p>
         </div>
       </Transition>
@@ -39,8 +39,8 @@
   </GenericDialog>
 
   <GenericDialog
-    @close="isEditBoardVisible = false"
-    :is-dialog-visible="isEditBoardVisible"
+    @close="boardStore.isEditBoardVisible = false"
+    :is-dialog-visible="boardStore.isEditBoardVisible"
     header="Edit Board"
   >
     <Form @submit="onSubmit" :validation-schema="schema" class="form-body">
@@ -83,7 +83,6 @@ import GenericInput from './generic-input.vue'
 
 const isCrudDropdownVisble = ref(false)
 const isDeleteBoardConfirmationVisible = ref(false)
-const isEditBoardVisible = ref(false)
 const dropdownToggleBtn = ref()
 const boardStore = useBoardStore()
 
@@ -110,7 +109,7 @@ const onSubmit = (values: any) => {
     boardStore.selectedBoard.name = values.name
   }
 
-  isEditBoardVisible.value = false
+  boardStore.isEditBoardVisible = false
 }
 
 const deleteBoard = () => {

@@ -6,6 +6,8 @@ import type { Board } from "@/interfaces/board";
 export const useBoardStore = defineStore('board', () => {
  const boards = ref<Board[]>([])
  const selectedBoard = ref<Board>()
+ const isEditBoardVisible = ref(false)
+
 
  const getBoards = async () => {
   try {
@@ -22,5 +24,5 @@ export const useBoardStore = defineStore('board', () => {
   boards.value.push(board)
  }
 
- return { boards, selectedBoard, getBoards, addBoard }
+ return { boards, selectedBoard, isEditBoardVisible, getBoards, addBoard }
 })

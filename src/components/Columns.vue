@@ -18,7 +18,7 @@
         </div>
       </div>
     </div>
-    <div class="add-column">+ New Column</div>
+    <div @click="boardStore.isEditBoardVisible = true" class="add-column">+ New Column</div>
   </div>
 </template>
 
