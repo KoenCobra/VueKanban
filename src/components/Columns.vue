@@ -18,6 +18,7 @@
         </div>
       </div>
     </div>
+    <div class="add-column">+ New Column</div>
   </div>
 </template>
 
@@ -81,6 +82,20 @@ const boardStore = useBoardStore()
         color: var(--mediumGrey);
       }
     }
+  }
+
+  .add-column {
+    display: grid;
+    place-items: center;
+    margin-top: 39px;
+    width: 280px;
+    max-height: 814px;
+    border-radius: 6px;
+    background: var(--addColumnBackGround);
+    font-size: 1.5rem;
+    color: var(--mediumGrey);
+    font-weight: 700;
+    cursor: pointer;
   }
 }
 </style>
