@@ -29,14 +29,15 @@ const boardStore = useBoardStore()
 </script>
 
 <style scoped lang="scss">
-@import '../assets/sass/variables.scss';
+@import '@/assets/sass/variables.scss';
 
 .columns-section {
   padding: 1.55rem;
   display: flex;
   gap: 1.5rem;
-  height: 100%;
-
+  overflow: auto;
+  height: calc(100vh - 94.5px);
+  width: calc(100vw - 18.75rem);
   .column {
     width: 280px;
 
