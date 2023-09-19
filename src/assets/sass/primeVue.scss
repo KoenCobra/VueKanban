@@ -56,3 +56,26 @@
     }
   }
 }
+
+.p-dropdown {
+  background-color: var(--darkGreyBackground) !important;
+}
+
+.p-inputtext {
+  color: var(--textColor) !important;
+}
+
+.p-dropdown-panel {
+  margin-top: 0.5rem;
+  background: white !important;
+}
+
+.dark .p-dropdown-panel {
+  margin-top: 0.5rem;
+  background: #20212c !important;
+}
+
+.p-dropdown-item {
+  font-weight: 500 !important;
+  color: var(--mediumGrey);
+}

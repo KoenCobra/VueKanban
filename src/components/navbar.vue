@@ -110,7 +110,7 @@
         :options="boardStore.selectedBoard?.columns"
         optionLabel="name"
       />
-      <button class="submit-btn" type="submit">Save Changes</button>
+      <button class="submit-btn" type="submit">Create Task</button>
     </Form>
   </GenericDialog>
 </template>
@@ -173,6 +173,7 @@ const onSubmit = (values: any) => {
   if (boardStore.selectedBoard) {
     boardStore.selectedBoard.name = values.name
   }
+  boardStore.isEditBoardVisible = false
 }
 
 const onNewTaskSubmit = (values: any) => {
