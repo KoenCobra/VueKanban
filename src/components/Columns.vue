@@ -37,7 +37,7 @@
           />
           <div v-if="isCrudDropdownVisble" class="crud-dropdown">
             <p @click="isEditTaskVisible = true">Edit Task</p>
-            <p @click="isDeleteTaskConfirmationVisible = true" class="delete-text">Delete Task</p>
+            <p @click="openDeleteTask" class="delete-text">Delete Task</p>
           </div>
         </div>
         <p>{{ selectedTask.description }}</p>
@@ -64,6 +64,22 @@
         @change="changeStatus($event)"
       />
       <button @click="isTaskVisible = false" class="submit-btn" type="submit">Save Changes</button>
+    </div>
+  </GenericDialog>
+
+  <GenericDialog
+    @close="isDeleteTaskConfirmationVisible = false"
+    :is-dialog-visible="isDeleteTaskConfirmationVisible"
+    header-class="delete-board-header"
+    header="Delete this Task?"
+  >
+    Are you sure you want to delete the <b> ‘{{ selectedTask.title }}’ </b> task?
+
+    <div class="remove-board-footer">
+      <button @click="deleteTask" class="delete-board-btn">Delete</button>
+      <button @click="isDeleteTaskConfirmationVisible = false" class="cancel-delete-board-btn">
+        Cancel
+      </button>
     </div>
   </GenericDialog>
 </template>
@@ -128,6 +144,27 @@ const handleClickOutside = (event: any) => {
   ) {
     isCrudDropdownVisble.value = false
   }
+}
+
+const openDeleteTask = () => {
+  isTaskVisible.value = false
+  isDeleteTaskConfirmationVisible.value = true
+}
+
+const deleteTask = () => {
+  const currentColumn = boardStore.selectedBoard?.columns.find(
+    (c) => c.tasks?.includes(selectedTask.value)
+  )
+
+  if (currentColumn && currentColumn.tasks) {
+    const taskIndex = currentColumn.tasks.indexOf(selectedTask.value)
+    if (taskIndex > -1) {
+      currentColumn.tasks.splice(taskIndex, 1)
+    }
+  }
+
+  isDeleteTaskConfirmationVisible.value = false
+  selectedTask.value = null
 }
 
 onMounted(() => {
