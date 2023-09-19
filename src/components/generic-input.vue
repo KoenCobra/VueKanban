@@ -3,6 +3,7 @@
     <label :for="name">{{ label }}</label>
     <div class="input-error-container">
       <input
+        v-if="!isTextArea"
         :name="name"
         :id="name"
         :type="type"
@@ -10,6 +11,17 @@
         :placeholder="placeholder"
         @input="handleChange"
       />
+
+      <textarea
+        v-if="isTextArea"
+        :name="name"
+        :id="name"
+        :type="type"
+        :value="inputValue"
+        :placeholder="placeholder"
+        @input="handleChange"
+        rows="3"
+      ></textarea>
 
       <p class="error-message" v-show="errorMessage">
         {{ errorMessage }}
@@ -26,6 +38,10 @@ const props = defineProps({
   type: {
     type: String,
     default: 'text'
+  },
+  isTextArea: {
+    type: Boolean,
+    default: false
   },
   value: {
     type: String,
@@ -106,13 +122,6 @@ const {
       font-size: 0.8125rem;
       font-weight: 500;
     }
-  }
-
-  ::placeholder {
-    color: var(--placeholderText);
-    font-weight: 500;
-    font-size: 0.8125rem;
-    opacity: 0.4;
   }
 }
 </style>

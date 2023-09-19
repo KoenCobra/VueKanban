@@ -1,4 +1,4 @@
-import type { BoardColumn } from "./BoardColumn";
+import type { BoardColumn } from "./boardColumn";
 
 export interface Board {
  name?: string,

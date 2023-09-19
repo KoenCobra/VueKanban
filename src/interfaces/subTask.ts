@@ -1,4 +1,5 @@
 export interface SubTask {
  isCompleted: boolean,
- title?: string
+ title?: string,
+ placeholder?: string
 }

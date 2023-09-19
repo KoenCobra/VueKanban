@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="navbar-btns">
-      <button class="add-new-task-btn">+ Add New Task</button>
+      <button @click="isNewTaskVisible = true" class="add-new-task-btn">+ Add New Task</button>
       <button @click="isCrudDropdownVisble = !isCrudDropdownVisble" ref="dropdownToggleBtn">
         <img src="../assets/images/icon-vertical-ellipsis.svg" alt="ellipsis" />
       </button>
@@ -71,6 +71,43 @@
       <button class="submit-btn" type="submit">Save Changes</button>
     </Form>
   </GenericDialog>
+
+  <GenericDialog
+    @close="isNewTaskVisible = false"
+    :is-dialog-visible="isNewTaskVisible"
+    header="Add New Task"
+  >
+    <Form @submit="onNewTaskSubmit" :validation-schema="taskSchema" class="form-body">
+      <GenericInput
+        placeholder="e.g. Take coffee break"
+        :autofocus="true"
+        label="Title"
+        name="title"
+      />
+
+      <GenericInput
+        placeholder="e.g. It’s always good to take a break. This 15 minute break will 
+recharge the batteries a little."
+        label="Description"
+        name="description"
+        :is-text-area="true"
+      />
+
+      <div class="columns">
+        <label>Subtasks</label>
+        <TransitionGroup name="list">
+          <div v-for="(subtask, index) of task.subtasks" :key="index" class="column-input">
+            <input v-model="subtask.title" :placeholder="subtask.placeholder" />
+            <img src="@/assets/images/icon-cross.svg" @click="task.subtasks.splice(index, 1)" />
+          </div>
+        </TransitionGroup>
+        <button type="button" @click="addSubTask()" class="add-column-btn">
+          + Add New Subtask
+        </button>
+      </div>
+      <button class="submit-btn" type="submit">Save Changes</button>
+    </Form>
+  </GenericDialog>
 </template>
 
 <script setup lang="ts">
@@ -80,11 +117,23 @@ import { useBoardStore } from '@/stores/boardStore'
 import * as Yup from 'yup'
 import { Form } from 'vee-validate'
 import GenericInput from './generic-input.vue'
+import type { Task } from '@/interfaces/task'
 
 const isCrudDropdownVisble = ref(false)
 const isDeleteBoardConfirmationVisible = ref(false)
+const isNewTaskVisible = ref(false)
 const dropdownToggleBtn = ref()
 const boardStore = useBoardStore()
+
+const task = ref<Task>({
+  subtasks: [
+    { isCompleted: false, title: '', placeholder: 'e.g. Make coffee' },
+    { isCompleted: false, title: '', placeholder: 'e.g. Drink coffee & smile' }
+  ],
+  description: '',
+  status: '',
+  title: ''
+})
 
 const handleClickOutside = (event: any) => {
   if (
@@ -100,16 +149,27 @@ const schema = Yup.object().shape({
   name: Yup.string().required(`Can't be empty`)
 })
 
+const taskSchema = Yup.object().shape({
+  title: Yup.string().required(`Can't be empty`),
+  description: Yup.string()
+})
+
 const addColumn = () => {
   boardStore.selectedBoard?.columns.push({ name: '', tasks: [] })
+}
+
+const addSubTask = () => {
+  task.value.subtasks.push({ title: '', isCompleted: false })
 }
 
 const onSubmit = (values: any) => {
   if (boardStore.selectedBoard) {
     boardStore.selectedBoard.name = values.name
   }
+}
 
-  boardStore.isEditBoardVisible = false
+const onNewTaskSubmit = (values: any) => {
+  console.log(values)
 }
 
 const deleteBoard = () => {
