@@ -116,7 +116,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, watchEffect } from 'vue'
 import GenericDialog from '@/components/generic-dialog.vue'
 import { useBoardStore } from '@/stores/boardStore'
 import * as Yup from 'yup'
@@ -188,6 +188,12 @@ const onNewTaskSubmit = (values: any) => {
 
   column?.tasks?.push(createdTask)
   isNewTaskVisible.value = false
+  task.value = {
+    subtasks: [
+      { isCompleted: false, title: '', placeholder: 'e.g. Make coffee' },
+      { isCompleted: false, title: '', placeholder: 'e.g. Drink coffee & smile' }
+    ]
+  }
 }
 
 const deleteBoard = () => {
@@ -198,6 +204,10 @@ const deleteBoard = () => {
     boardStore.selectedBoard = boardStore.boards[0]
   }
 }
+
+watchEffect(() => {
+  selectedStatus.value = boardStore.selectedBoard?.columns[0]
+})
 
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
