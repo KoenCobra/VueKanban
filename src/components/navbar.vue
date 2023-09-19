@@ -14,8 +14,8 @@
 
       <Transition>
         <div v-if="isCrudDropdownVisble" class="crud-dropdown">
-          <p @click="boardStore.isEditBoardVisible = true">Edit Board</p>
-          <p @click="isDeleteBoardConfirmationVisible = true" class="delete-text">Delete Board</p>
+          <p @click="boardStore.isEditBoardVisible = true">Edit Task</p>
+          <p @click="isDeleteBoardConfirmationVisible = true" class="delete-text">Delete Task</p>
         </div>
       </Transition>
     </div>
@@ -257,14 +257,14 @@ onUnmounted(() => {
       position: absolute;
       top: 130%;
       right: 0;
-      background-color: var(--white);
+      background-color: var(--bodyBackground);
       border-radius: 8px;
       box-shadow: 0px 10px 20px 0px rgba(54, 78, 126, 0.25);
       padding: 1rem;
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      font-size: 0.8125rem;
+      font-size: 1rem;
       color: var(--mediumGrey);
       font-weight: 500;
 

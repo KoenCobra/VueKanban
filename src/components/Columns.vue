@@ -30,10 +30,15 @@
         <div class="task-title">
           <h3>{{ selectedTask.title }}</h3>
           <img
+            ref="dropdownToggleBtn"
             @click="isCrudDropdownVisble = !isCrudDropdownVisble"
             src="../assets/images/icon-vertical-ellipsis.svg"
             alt="ellipsis"
           />
+          <div v-if="isCrudDropdownVisble" class="crud-dropdown">
+            <p @click="isEditTaskVisible = true">Edit Task</p>
+            <p @click="isDeleteTaskConfirmationVisible = true" class="delete-text">Delete Task</p>
+          </div>
         </div>
         <p>{{ selectedTask.description }}</p>
       </div>
@@ -65,7 +70,7 @@
 
 <script setup lang="ts">
 import { useBoardStore } from '@/stores/boardStore'
-import { ref, watchEffect } from 'vue'
+import { onMounted, onUnmounted, ref, watchEffect } from 'vue'
 import draggable from 'vuedraggable'
 import GenericDialog from '@/components/generic-dialog.vue'
 import Dropdown from 'primevue/dropdown'
@@ -77,6 +82,9 @@ const isTaskVisible = ref(false)
 const selectedStatus = ref()
 const selectedTask = ref()
 const isCrudDropdownVisble = ref(false)
+const isEditTaskVisible = ref(false)
+const isDeleteTaskConfirmationVisible = ref(false)
+const dropdownToggleBtn = ref()
 
 watchEffect(() => {
   boardStore.selectedBoard?.columns.forEach((column) => {
@@ -111,6 +119,24 @@ const changeStatus = (event: any) => {
 
   selectedTask.value.status = event.value.name
 }
+
+const handleClickOutside = (event: any) => {
+  if (
+    dropdownToggleBtn.value &&
+    !dropdownToggleBtn.value.contains(event.target) &&
+    isCrudDropdownVisble.value
+  ) {
+    isCrudDropdownVisble.value = false
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside)
+})
 </script>
 
 <style scoped lang="scss">
@@ -200,6 +226,11 @@ const changeStatus = (event: any) => {
         font-weight: 700;
         color: var(--textColor);
       }
+
+      img {
+        padding-inline: 0.5rem;
+        cursor: pointer;
+      }
     }
 
     p {
@@ -230,6 +261,30 @@ const changeStatus = (event: any) => {
         text-decoration: line-through;
       }
     }
+  }
+}
+
+.crud-dropdown {
+  position: absolute;
+  top: 4rem;
+  right: 3rem;
+  background-color: var(--bodyBackground);
+  border-radius: 8px;
+  box-shadow: 0px 10px 20px 0px rgba(54, 78, 126, 0.25);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: 0.8125rem;
+  color: var(--mediumGrey);
+  font-weight: 500;
+
+  p {
+    cursor: pointer;
+  }
+
+  .delete-text {
+    color: var(--red) !important;
   }
 }
 </style>
