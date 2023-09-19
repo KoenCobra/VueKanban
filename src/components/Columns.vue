@@ -7,7 +7,7 @@
       </div>
       <draggable class="tasks" :list="column.tasks" group="people" itemKey="title" :animation="300">
         <template #item="{ element }">
-          <div class="task">
+          <div @click="openTask(element)" class="task">
             <p>{{ element.title }}</p>
             <p class="subtask-number">
               ({{ element.subtasks?.filter((s: any) => s.isCompleted).length }} of
@@ -19,20 +19,83 @@
     </div>
     <div @click="boardStore.isEditBoardVisible = true" class="add-column">+ New Column</div>
   </div>
+
+  <GenericDialog
+    @close="isTaskVisible = false"
+    :is-dialog-visible="isTaskVisible"
+    :is-close-btn-visible="false"
+  >
+    <div class="task-title">
+      <h3>{{ selectedTask.title }}</h3>
+      <p>{{ selectedTask.description }}</p>
+    </div>
+    <div class="subtasks">
+      <label
+        >SubTasks ({{ selectedTask.subtasks.filter((s: any) => s.isCompleted).length }} of
+        {{ selectedTask.subtasks.length }})</label
+      >
+      <div class="subtask" v-for="(subtask, index) in selectedTask.subtasks" :key="index">
+        <Checkbox v-model="subtask.isCompleted" :binary="true" />
+        <label> {{ subtask.title }} </label>
+      </div>
+    </div>
+    <Dropdown
+      v-model="selectedStatus"
+      :options="boardStore.selectedBoard?.columns"
+      optionLabel="name"
+      @change="changeStatus($event)"
+    />
+    <button class="submit-btn" type="submit">Save Changes</button>
+  </GenericDialog>
 </template>
 
 <script setup lang="ts">
 import { useBoardStore } from '@/stores/boardStore'
-import { watchEffect } from 'vue'
+import { ref, watchEffect } from 'vue'
 import draggable from 'vuedraggable'
+import GenericDialog from '@/components/generic-dialog.vue'
+import Dropdown from 'primevue/dropdown'
+import type { Task } from '@/interfaces/task'
+import Checkbox from 'primevue/checkbox'
 
 const boardStore = useBoardStore()
+const isTaskVisible = ref(false)
+const selectedStatus = ref()
+const selectedTask = ref()
 
 watchEffect(() => {
   boardStore.selectedBoard?.columns.forEach((column) => {
     column.color = '#' + ((Math.random() * 0xffffff) << 0).toString(16)
   })
 })
+
+const openTask = (task: Task) => {
+  isTaskVisible.value = true
+  selectedTask.value = task
+  selectedStatus.value = boardStore.selectedBoard?.columns.find((c) => c.name === task.status)
+}
+
+const changeStatus = (event: any) => {
+  const currentColumn = boardStore.selectedBoard?.columns.find(
+    (c) => c.tasks?.includes(selectedTask.value)
+  )
+
+  if (currentColumn && currentColumn.tasks) {
+    const taskIndex = currentColumn.tasks.indexOf(selectedTask.value)
+    if (taskIndex > -1) {
+      currentColumn.tasks.splice(taskIndex, 1)
+    }
+  }
+
+  const newColumn = event.value
+  if (newColumn.tasks) {
+    newColumn.tasks.push(selectedTask.value)
+  } else {
+    newColumn.tasks = [selectedTask.value]
+  }
+
+  selectedTask.value.status = event.value.name
+}
 </script>
 
 <style scoped lang="scss">

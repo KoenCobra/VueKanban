@@ -2,7 +2,7 @@
   <Transition>
     <div @click="handleClick($event)" v-if="props.isDialogVisible" class="dialog-container">
       <div class="dialog">
-        <div class="dialog-header">
+        <div class="dialog-header" v-if="isCloseBtnVisible">
           <h2 :class="props.headerClass">{{ props.header }}</h2>
           <img @click="$emit('close')" src="../assets/images/icon-cross.svg" alt="" />
         </div>
@@ -15,7 +15,23 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps(['isDialogVisible', 'header', 'headerClass'])
+const props = defineProps({
+  header: {
+    type: String
+  },
+  isDialogVisible: {
+    type: Boolean,
+    default: false
+  },
+  headerClass: {
+    type: String,
+    default: undefined
+  },
+  isCloseBtnVisible: {
+    type: Boolean,
+    default: true
+  }
+})
 const emit = defineEmits(['close'])
 
 const handleClick = (event: any) => {

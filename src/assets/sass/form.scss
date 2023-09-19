@@ -3,12 +3,12 @@
 .form-body {
   display: grid;
   gap: 1.5rem;
-
-  .submit-btn {
-    background-color: var(--mainPurple);
-    font-size: 0.8125rem;
-    font-weight: 700;
-  }
+}
+.submit-btn {
+  background-color: var(--mainPurple);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  width: 100%;
 }
 
 .columns {
