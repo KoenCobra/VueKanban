@@ -5,7 +5,7 @@
         <div class="logo" v-if="!boardStore.isSideBarVisible">
           <div class="logo-img" :class="{ dark: themeStore.isDarkMode }"></div>
         </div>
-        <h1>Platform Launch</h1>
+        <h1>{{ boardStore.selectedBoard?.name }}</h1>
       </div>
     </div>
     <div class="navbar-btns">
