@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar" :class="{ active: !isSideBarVisible }">
+  <div class="sidebar" :class="{ active: !boardStore.isSideBarVisible }">
     <div>
       <div class="logo">
         <div class="logo-img" :class="{ dark: themeStore.isDarkMode }"></div>
@@ -38,12 +38,16 @@
 
     <div class="sidebar-footer">
       <ThemeSwitcher />
-      <button class="hide-sidebar-btn" @click="isSideBarVisible = false">
+      <button class="hide-sidebar-btn" @click="boardStore.isSideBarVisible = false">
         <img src="../assets/images/icon-hide-sidebar.svg" alt="hide-sidebar" />Hide Sidebar
       </button>
     </div>
   </div>
-  <button @click="isSideBarVisible = true" v-if="!isSideBarVisible" class="show-sidebar-btn">
+  <button
+    @click="boardStore.isSideBarVisible = true"
+    v-if="!boardStore.isSideBarVisible"
+    class="show-sidebar-btn"
+  >
     <img src="../assets/images/icon-show-sidebar.svg" alt="" />
   </button>
 
@@ -90,7 +94,6 @@ const toast = useToast()
 
 const boardStore = useBoardStore()
 const themeStore = useThemeStore()
-const isSideBarVisible = ref(true)
 const isDialogVisible = ref(false)
 
 const newBoard = ref<Board>({ name: '', columns: [{ name: 'ToDo' }, { name: 'Doing' }] })

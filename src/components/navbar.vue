@@ -2,8 +2,10 @@
   <div class="navbar">
     <div class="logo">
       <div class="logo-title">
+        <div class="logo" v-if="!boardStore.isSideBarVisible">
+          <div class="logo-img" :class="{ dark: themeStore.isDarkMode }"></div>
+        </div>
         <h1>Platform Launch</h1>
-        <p></p>
       </div>
     </div>
     <div class="navbar-btns">
@@ -124,6 +126,7 @@ import { Form } from 'vee-validate'
 import GenericInput from './generic-input.vue'
 import type { Task } from '@/interfaces/task'
 import Dropdown from 'primevue/dropdown'
+import { useThemeStore } from '@/stores/themeStore'
 
 const isCrudDropdownVisble = ref(false)
 const isDeleteBoardConfirmationVisible = ref(false)
@@ -131,6 +134,7 @@ const isNewTaskVisible = ref(false)
 const dropdownToggleBtn = ref()
 const boardStore = useBoardStore()
 const selectedStatus = ref()
+const themeStore = useThemeStore()
 
 const task = ref<Task>({
   subtasks: [
@@ -233,10 +237,25 @@ onUnmounted(() => {
     gap: 3.875rem;
 
     .logo-title {
+      display: flex;
+      align-items: center;
       h1 {
         font-size: 1.5rem;
         font-weight: 700;
         color: var(--textColor);
+      }
+    }
+
+    .logo-img {
+      background-image: url('../assets/images/logo-dark.svg');
+      background-repeat: no-repeat;
+      width: 160.528px;
+      height: 25.224px;
+      margin-right: 1rem;
+      border-right: 1px solid lightgray;
+
+      &.dark {
+        background-image: url('../assets/images/logo-light.svg');
       }
     }
   }
