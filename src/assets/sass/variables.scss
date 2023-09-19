@@ -20,9 +20,11 @@
   --darkGreyBackground: var(--white);
   --lightPurpleHover: rgba(99, 95, 199, 0.25);
   --addColumnBackGround: linear-gradient(180deg, #e9effa 0%, rgba(233, 239, 250, 0.5) 100%);
+  --subtaskBackground: var(--lightGrey);
 }
 
 .dark {
+  --subtaskBackground: var(--veryDarkGrey);
   --addColumnBackGround: linear-gradient(
     180deg,
     rgba(43, 44, 55, 0.25) 0%,

@@ -25,27 +25,41 @@
     :is-dialog-visible="isTaskVisible"
     :is-close-btn-visible="false"
   >
-    <div class="task-title">
-      <h3>{{ selectedTask.title }}</h3>
-      <p>{{ selectedTask.description }}</p>
-    </div>
-    <div class="subtasks">
-      <label
-        >SubTasks ({{ selectedTask.subtasks.filter((s: any) => s.isCompleted).length }} of
-        {{ selectedTask.subtasks.length }})</label
-      >
-      <div class="subtask" v-for="(subtask, index) in selectedTask.subtasks" :key="index">
-        <Checkbox v-model="subtask.isCompleted" :binary="true" />
-        <label> {{ subtask.title }} </label>
+    <div class="task-details">
+      <div class="task-title-section">
+        <div class="task-title">
+          <h3>{{ selectedTask.title }}</h3>
+          <img
+            @click="isCrudDropdownVisble = !isCrudDropdownVisble"
+            src="../assets/images/icon-vertical-ellipsis.svg"
+            alt="ellipsis"
+          />
+        </div>
+        <p>{{ selectedTask.description }}</p>
       </div>
+      <div class="subtasks">
+        <label class="subtasks-label"
+          >SubTasks ({{ selectedTask.subtasks.filter((s: any) => s.isCompleted).length }} of
+          {{ selectedTask.subtasks.length }})</label
+        >
+        <div
+          class="subtask"
+          :class="{ completed: subtask.isCompleted }"
+          v-for="(subtask, index) in selectedTask.subtasks"
+          :key="index"
+        >
+          <Checkbox v-model="subtask.isCompleted" :binary="true" />
+          <label> {{ subtask.title }} </label>
+        </div>
+      </div>
+      <Dropdown
+        v-model="selectedStatus"
+        :options="boardStore.selectedBoard?.columns"
+        optionLabel="name"
+        @change="changeStatus($event)"
+      />
+      <button @click="isTaskVisible = false" class="submit-btn" type="submit">Save Changes</button>
     </div>
-    <Dropdown
-      v-model="selectedStatus"
-      :options="boardStore.selectedBoard?.columns"
-      optionLabel="name"
-      @change="changeStatus($event)"
-    />
-    <button class="submit-btn" type="submit">Save Changes</button>
   </GenericDialog>
 </template>
 
@@ -62,6 +76,7 @@ const boardStore = useBoardStore()
 const isTaskVisible = ref(false)
 const selectedStatus = ref()
 const selectedTask = ref()
+const isCrudDropdownVisble = ref(false)
 
 watchEffect(() => {
   boardStore.selectedBoard?.columns.forEach((column) => {
@@ -168,6 +183,53 @@ const changeStatus = (event: any) => {
     color: var(--mediumGrey);
     font-weight: 700;
     cursor: pointer;
+  }
+}
+.task-details {
+  display: grid;
+  gap: 1.5rem;
+  .task-title-section {
+    .task-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+      h3 {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: var(--textColor);
+      }
+    }
+
+    p {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--mediumGrey);
+    }
+  }
+
+  .subtasks {
+    .subtasks-label {
+      color: var(--mediumGrey);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .subtask {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1.25rem;
+      background-color: var(--subtaskBackground);
+      padding: 0.75rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+
+      &.completed label {
+        text-decoration: line-through;
+      }
+    }
   }
 }
 </style>
