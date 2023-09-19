@@ -33,7 +33,8 @@
   }
 }
 input,
-textarea {
+textarea,
+.p-dropdown {
   width: 100%;
   border-radius: 4px;
   border: 0;
@@ -47,6 +48,15 @@ textarea {
   &:focus-within {
     outline: 1px solid rgba(130, 143, 163, 0.25);
   }
+}
+
+.p-dropdown {
+  padding: 0.5rem 0.75rem;
+  border: 0 !important;
+}
+
+.p-inputtext {
+  padding: 0 !important;
 }
 
 ::placeholder {

@@ -87,7 +87,7 @@
 
       <GenericInput
         placeholder="e.g. It’s always good to take a break. This 15 minute break will 
-recharge the batteries a little."
+      recharge the batteries a little."
         label="Description"
         name="description"
         :is-text-area="true"
@@ -105,6 +105,11 @@ recharge the batteries a little."
           + Add New Subtask
         </button>
       </div>
+      <Dropdown
+        v-model="selectedStatus"
+        :options="boardStore.selectedBoard?.columns"
+        optionLabel="name"
+      />
       <button class="submit-btn" type="submit">Save Changes</button>
     </Form>
   </GenericDialog>
@@ -118,12 +123,14 @@ import * as Yup from 'yup'
 import { Form } from 'vee-validate'
 import GenericInput from './generic-input.vue'
 import type { Task } from '@/interfaces/task'
+import Dropdown from 'primevue/dropdown'
 
 const isCrudDropdownVisble = ref(false)
 const isDeleteBoardConfirmationVisible = ref(false)
 const isNewTaskVisible = ref(false)
 const dropdownToggleBtn = ref()
 const boardStore = useBoardStore()
+const selectedStatus = ref()
 
 const task = ref<Task>({
   subtasks: [
@@ -169,7 +176,18 @@ const onSubmit = (values: any) => {
 }
 
 const onNewTaskSubmit = (values: any) => {
-  console.log(values)
+  const column = boardStore.selectedBoard?.columns.find(
+    (c) => c.name?.toLowerCase() === selectedStatus.value.name.toLowerCase()
+  )
+
+  const createdTask: Task = {
+    subtasks: task.value.subtasks,
+    description: values.description,
+    title: values.title
+  }
+
+  column?.tasks?.push(createdTask)
+  isNewTaskVisible.value = false
 }
 
 const deleteBoard = () => {
