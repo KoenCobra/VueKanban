@@ -14,8 +14,8 @@
 
       <Transition>
         <div v-if="isCrudDropdownVisble" class="crud-dropdown">
-          <p @click="boardStore.isEditBoardVisible = true">Edit Task</p>
-          <p @click="isDeleteBoardConfirmationVisible = true" class="delete-text">Delete Task</p>
+          <p @click="boardStore.isEditBoardVisible = true">Edit Board</p>
+          <p @click="isDeleteBoardConfirmationVisible = true" class="delete-text">Delete Board</p>
         </div>
       </Transition>
     </div>

@@ -1,5 +1,11 @@
 <template>
-  <div class="columns-section">
+  <div class="empty-board" v-if="!boardStore.selectedBoard?.columns.length">
+    <p>This board is empty. Create a new column to get started.</p>
+    <button @click="boardStore.isEditBoardVisible = true" class="add-column-btn">
+      +Add New Column
+    </button>
+  </div>
+  <div class="columns-section" v-else>
     <div class="column" v-for="(column, index) in boardStore.selectedBoard?.columns" :key="index">
       <div class="column-name">
         <div :style="`background-color: ${column.color};`" class="column-color"></div>
@@ -317,6 +323,25 @@ onUnmounted(() => {
     color: var(--mediumGrey);
     font-weight: 700;
     cursor: pointer;
+  }
+}
+
+.empty-board {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-content: center;
+  font-size: 1.125rem;
+  height: 80%;
+  color: var(--mediumGrey);
+  font-weight: 700;
+  .add-column-btn {
+    background-color: var(--mainPurple);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    padding: 0.5rem 0.7rem;
   }
 }
 .task-details {
