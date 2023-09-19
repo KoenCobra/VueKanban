@@ -36,7 +36,7 @@
             alt="ellipsis"
           />
           <div v-if="isCrudDropdownVisble" class="crud-dropdown">
-            <p @click="isEditTaskVisible = true">Edit Task</p>
+            <p @click="openEditTask">Edit Task</p>
             <p @click="openDeleteTask" class="delete-text">Delete Task</p>
           </div>
         </div>
@@ -82,6 +82,54 @@
       </button>
     </div>
   </GenericDialog>
+
+  <GenericDialog
+    @close="isEditTaskVisible = false"
+    :is-dialog-visible="isEditTaskVisible"
+    header="Add New Task"
+  >
+    <Form @submit="onNewTaskSubmit" :validation-schema="taskSchema" class="form-body">
+      <GenericInput
+        placeholder="e.g. Take coffee break"
+        :autofocus="true"
+        label="Title"
+        name="title"
+        :value="selectedTask.title"
+      />
+
+      <GenericInput
+        placeholder="e.g. It’s always good to take a break. This 15 minute break will 
+      recharge the batteries a little."
+        label="Description"
+        name="description"
+        :is-text-area="true"
+        :value="selectedTask.description"
+      />
+
+      <div class="columns">
+        <label>Subtasks</label>
+        <TransitionGroup name="list">
+          <div v-for="(subtask, index) of selectedTask.subtasks" :key="index" class="column-input">
+            <input v-model="subtask.title" :placeholder="subtask.placeholder" />
+            <img
+              src="@/assets/images/icon-cross.svg"
+              @click="selectedTask.subtasks.splice(index, 1)"
+            />
+          </div>
+        </TransitionGroup>
+        <button type="button" @click="addSubTask()" class="add-column-btn">
+          + Add New Subtask
+        </button>
+      </div>
+      <Dropdown
+        v-model="selectedStatus"
+        :options="boardStore.selectedBoard?.columns"
+        optionLabel="name"
+        @change="changeStatus($event)"
+      />
+      <button class="submit-btn" type="submit">Save Changes</button>
+    </Form>
+  </GenericDialog>
 </template>
 
 <script setup lang="ts">
@@ -92,6 +140,9 @@ import GenericDialog from '@/components/generic-dialog.vue'
 import Dropdown from 'primevue/dropdown'
 import type { Task } from '@/interfaces/task'
 import Checkbox from 'primevue/checkbox'
+import GenericInput from './generic-input.vue'
+import { Form } from 'vee-validate'
+import * as Yup from 'yup'
 
 const boardStore = useBoardStore()
 const isTaskVisible = ref(false)
@@ -151,6 +202,11 @@ const openDeleteTask = () => {
   isDeleteTaskConfirmationVisible.value = true
 }
 
+const openEditTask = () => {
+  isTaskVisible.value = false
+  isEditTaskVisible.value = true
+}
+
 const deleteTask = () => {
   const currentColumn = boardStore.selectedBoard?.columns.find(
     (c) => c.tasks?.includes(selectedTask.value)
@@ -165,6 +221,21 @@ const deleteTask = () => {
 
   isDeleteTaskConfirmationVisible.value = false
   selectedTask.value = null
+}
+
+const addSubTask = () => {
+  selectedTask.value.subtasks.push({ title: '', isCompleted: false })
+}
+
+const taskSchema = Yup.object().shape({
+  title: Yup.string().required(`Can't be empty`),
+  description: Yup.string()
+})
+
+const onNewTaskSubmit = (values: any) => {
+  selectedTask.value.title = values.title
+  selectedTask.value.description = values.description
+  isEditTaskVisible.value = false
 }
 
 onMounted(() => {
