@@ -60,6 +60,10 @@ const handleClick = (event: any) => {
     border-radius: 6px;
     position: relative;
 
+    @media (max-width: 800px) {
+      width: 90%;
+    }
+
     .dialog-header {
       font-weight: 700;
       font-size: 1.125rem;
