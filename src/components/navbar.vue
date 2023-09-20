@@ -195,8 +195,11 @@ const onNewTaskSubmit = (values: any) => {
   const createdTask: Task = {
     subtasks: task.value.subtasks,
     description: values.description,
-    title: values.title
+    title: values.title,
+    status: selectedStatus.value.name
   }
+
+  console.log(createdTask)
 
   column?.tasks?.push(createdTask)
   isNewTaskVisible.value = false

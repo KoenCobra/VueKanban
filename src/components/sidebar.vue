@@ -96,7 +96,13 @@ const boardStore = useBoardStore()
 const themeStore = useThemeStore()
 const isDialogVisible = ref(false)
 
-const newBoard = ref<Board>({ name: '', columns: [{ name: 'ToDo' }, { name: 'Doing' }] })
+const newBoard = ref<Board>({
+  name: '',
+  columns: [
+    { name: 'ToDo', tasks: [], color: '' },
+    { name: 'Doing', tasks: [], color: '' }
+  ]
+})
 
 const addColumn = () => {
   newBoard.value.columns.push({ name: '' })
@@ -128,7 +134,13 @@ const onSubmit = (values: any) => {
 }
 
 const openDialog = () => {
-  newBoard.value = { name: '', columns: [{ name: 'ToDo' }, { name: 'Doing' }] }
+  newBoard.value = {
+    name: '',
+    columns: [
+      { name: 'ToDo', tasks: [], color: '' },
+      { name: 'Doing', tasks: [], color: '' }
+    ]
+  }
   isDialogVisible.value = true
 }
 </script>

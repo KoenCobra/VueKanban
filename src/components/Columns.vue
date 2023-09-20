@@ -67,12 +67,16 @@
           <label> {{ subtask.title }} </label>
         </div>
       </div>
-      <Dropdown
-        v-model="selectedStatus"
-        :options="boardStore.selectedBoard?.columns"
-        optionLabel="name"
-        @change="changeStatus($event)"
-      />
+      <div>
+        <p class="current-status">Current Status</p>
+
+        <Dropdown
+          v-model="selectedStatus"
+          :options="boardStore.selectedBoard?.columns"
+          optionLabel="name"
+          @change="changeStatus($event)"
+        />
+      </div>
       <button @click="isTaskVisible = false" class="submit-btn" type="submit">Save Changes</button>
     </div>
   </GenericDialog>
@@ -131,6 +135,7 @@
           + Add New Subtask
         </button>
       </div>
+
       <Dropdown
         v-model="selectedStatus"
         :options="boardStore.selectedBoard?.columns"
@@ -400,6 +405,13 @@ onUnmounted(() => {
       }
     }
   }
+}
+
+.current-status {
+  color: var(--mediumGrey);
+  font-size: 0.75rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
 }
 
 .crud-dropdown {
