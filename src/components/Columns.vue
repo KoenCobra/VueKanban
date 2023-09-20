@@ -169,7 +169,7 @@ import * as Yup from 'yup'
 const boardStore = useBoardStore()
 const isTaskVisible = ref(false)
 const selectedStatus = ref()
-const selectedTask = ref<Task>({} as Task)
+const selectedTask = ref()
 const isCrudDropdownVisble = ref(false)
 const isEditTaskVisible = ref(false)
 const isDeleteTaskConfirmationVisible = ref(false)
