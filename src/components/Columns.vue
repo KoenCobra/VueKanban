@@ -15,7 +15,14 @@
         <div :style="`background-color: ${column.color};`" class="column-color"></div>
         <p>{{ column.name }} ({{ column.tasks?.length }})</p>
       </div>
-      <draggable class="tasks" :list="column.tasks" group="tasks" itemKey="name" :animation="300">
+      <draggable
+        @vnode-updated="test($event)"
+        class="tasks"
+        :list="column.tasks"
+        group="tasks"
+        itemKey="name"
+        :animation="300"
+      >
         <template #item="{ element }">
           <div @click="openTask(element, column)" class="task">
             <p>{{ element.title }}</p>
@@ -173,6 +180,10 @@ watchEffect(() => {
     column.color = '#' + ((Math.random() * 0xffffff) << 0).toString(16)
   })
 })
+
+const test = (e: any) => {
+  console.log(e.props)
+}
 
 const openTask = (task: Task, column: any) => {
   isTaskVisible.value = true
