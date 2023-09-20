@@ -278,19 +278,18 @@ onUnmounted(() => {
 @import '@/assets/sass/variables.scss';
 
 .columns-section {
-  padding: 0 1.55rem 0;
   display: flex;
   height: calc(100vh - 94.5px);
   overflow: auto;
 
-  @media (max-width: 700px) {
+  @media (max-width: 800px) {
     width: 100vw !important;
   }
   .column {
     min-width: 280px;
     max-width: 280px;
     .column-name {
-      padding: 1.55rem 0;
+      padding: 1.55rem;
       display: flex;
       align-items: center;
       gap: 0.75rem;
@@ -315,6 +314,7 @@ onUnmounted(() => {
       display: flex;
       flex-direction: column;
       min-height: 20rem;
+      padding-left: 1.5rem;
     }
     .task {
       margin: 0 1.5rem 1.5rem 0;

@@ -5,7 +5,10 @@
         <div class="logo" v-if="!boardStore.isSideBarVisible">
           <div class="logo-img" :class="{ dark: themeStore.isDarkMode }"></div>
         </div>
-        <h1>{{ boardStore.selectedBoard?.name }}</h1>
+        <div class="board-name">
+          <img src="../assets/images/logo-mobile.svg" alt="" />
+          <h1>{{ boardStore.selectedBoard?.name }}</h1>
+        </div>
       </div>
     </div>
     <div class="navbar-btns">
@@ -15,7 +18,8 @@
         class="add-new-task-btn"
         :class="{ disabled: !boardStore.selectedBoard?.columns.length }"
       >
-        + Add New Task
+        <img src="../assets/images/icon-add-task-mobile.svg" alt="" />
+        <span class="new-task-text">Add New Task</span>
       </button>
       <button @click="isCrudDropdownVisble = !isCrudDropdownVisble" ref="dropdownToggleBtn">
         <img src="../assets/images/icon-vertical-ellipsis.svg" alt="ellipsis" />
@@ -239,6 +243,10 @@ onUnmounted(() => {
   padding: 1.25rem 2rem;
   background-color: var(--darkGreyBackground);
 
+  @media (max-width: 800px) {
+    padding: 1rem;
+  }
+
   .logo {
     display: flex;
     align-items: center;
@@ -247,10 +255,26 @@ onUnmounted(() => {
     .logo-title {
       display: flex;
       align-items: center;
-      h1 {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--textColor);
+
+      .board-name {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+
+        img {
+          @media (min-width: 800px) {
+            display: none;
+          }
+        }
+        h1 {
+          font-weight: 700;
+          font-size: 1.5rem;
+          color: var(--textColor);
+
+          @media (max-width: 800px) {
+            font-size: 1.2rem;
+          }
+        }
       }
     }
 
@@ -278,6 +302,20 @@ onUnmounted(() => {
       padding: 1rem 1.5rem;
       font-size: 0.9375rem;
       font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      @media (max-width: 800px) {
+        font-size: 1.5rem;
+        padding: 0.2rem 1.2rem;
+      }
+
+      .new-task-text {
+        @media (max-width: 800px) {
+          display: none;
+        }
+      }
 
       &.disabled {
         cursor: not-allowed;
@@ -298,6 +336,8 @@ onUnmounted(() => {
       font-size: 1rem;
       color: var(--mediumGrey);
       font-weight: 500;
+      z-index: 5;
+      width: max-content;
 
       p {
         cursor: pointer;
