@@ -5,7 +5,11 @@
       +Add New Column
     </button>
   </div>
-  <div class="columns-section" v-else>
+  <div
+    class="columns-section"
+    v-else
+    :style="boardStore.isSideBarVisible ? 'width: calc(100vw - 18.75rem)' : 'width: 100vw'"
+  >
     <div class="column" v-for="(column, index) in boardStore.selectedBoard?.columns" :key="index">
       <div class="column-name">
         <div :style="`background-color: ${column.color};`" class="column-color"></div>
@@ -261,7 +265,6 @@ onUnmounted(() => {
   display: flex;
   gap: 1.5rem;
   height: calc(100vh - 94.5px);
-  width: 100vw;
   overflow: auto;
   .column {
     min-width: 280px;

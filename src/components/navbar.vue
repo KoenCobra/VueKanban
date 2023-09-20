@@ -9,7 +9,14 @@
       </div>
     </div>
     <div class="navbar-btns">
-      <button @click="isNewTaskVisible = true" class="add-new-task-btn">+ Add New Task</button>
+      <button
+        :disabled="!boardStore.selectedBoard?.columns.length"
+        @click="isNewTaskVisible = true"
+        class="add-new-task-btn"
+        :class="{ disabled: !boardStore.selectedBoard?.columns.length }"
+      >
+        + Add New Task
+      </button>
       <button @click="isCrudDropdownVisble = !isCrudDropdownVisble" ref="dropdownToggleBtn">
         <img src="../assets/images/icon-vertical-ellipsis.svg" alt="ellipsis" />
       </button>
@@ -270,6 +277,10 @@ onUnmounted(() => {
       padding: 1rem 1.5rem;
       font-size: 0.9375rem;
       font-weight: 700;
+
+      &.disabled {
+        cursor: not-allowed;
+      }
     }
 
     .crud-dropdown {
