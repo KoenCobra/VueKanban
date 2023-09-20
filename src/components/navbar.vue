@@ -5,7 +5,11 @@
         <div class="logo" v-if="!boardStore.isSideBarVisible">
           <div class="logo-img" :class="{ dark: themeStore.isDarkMode }"></div>
         </div>
-        <div @click="isMobileBoardsVisible = !isMobileBoardsVisible" class="board-name">
+        <div
+          @click="isMobileBoardsVisible = !isMobileBoardsVisible"
+          ref="dropdownBoards"
+          class="board-name"
+        >
           <img src="../assets/images/logo-mobile.svg" alt="" />
           <h1>{{ boardStore.selectedBoard?.name }}</h1>
           <img
@@ -14,6 +18,10 @@
             alt="down"
           />
           <img v-else src="../assets/images/icon-chevron-up.svg" alt="down" />
+        </div>
+
+        <div v-if="isMobileBoardsVisible" class="boards-mobile-dropdown">
+          <Sidebar :is-dropdown="true"></Sidebar>
         </div>
       </div>
     </div>
@@ -142,12 +150,14 @@ import GenericInput from './generic-input.vue'
 import type { Task } from '@/interfaces/task'
 import Dropdown from 'primevue/dropdown'
 import { useThemeStore } from '@/stores/themeStore'
+import Sidebar from '@/components/sidebar.vue'
 
 const isCrudDropdownVisble = ref(false)
 const isDeleteBoardConfirmationVisible = ref(false)
 const isMobileBoardsVisible = ref(false)
 const isNewTaskVisible = ref(false)
 const dropdownToggleBtn = ref()
+const dropdownBoards = ref()
 const boardStore = useBoardStore()
 const selectedStatus = ref()
 const themeStore = useThemeStore()
@@ -169,6 +179,23 @@ const handleClickOutside = (event: any) => {
     isCrudDropdownVisble.value
   ) {
     isCrudDropdownVisble.value = false
+  }
+}
+
+const handleClickOutsideBoardsDropdown = (event: any) => {
+  if (
+    event.target.classList.contains('new-board-btn') ||
+    dropdownBoards.value.contains(event.target)
+  ) {
+    return
+  }
+
+  if (
+    dropdownBoards.value &&
+    !dropdownBoards.value.contains(event.target) &&
+    isMobileBoardsVisible.value
+  ) {
+    isMobileBoardsVisible.value = false
   }
 }
 
@@ -233,10 +260,12 @@ watchEffect(() => {
 
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
+  document.addEventListener('click', handleClickOutsideBoardsDropdown)
 })
 
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
+  document.removeEventListener('click', handleClickOutsideBoardsDropdown)
 })
 </script>
 
@@ -280,6 +309,12 @@ onUnmounted(() => {
             font-size: 1.2rem;
           }
         }
+      }
+
+      .boards-mobile-dropdown {
+        position: absolute;
+        top: 9%;
+        z-index: 9;
       }
     }
 

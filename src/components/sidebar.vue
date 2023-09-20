@@ -1,5 +1,8 @@
 <template>
-  <div class="sidebar" :class="{ active: !boardStore.isSideBarVisible }">
+  <div
+    class="sidebar"
+    :class="[{ active: !boardStore.isSideBarVisible }, props.isDropdown ? 'mobile-dropdown' : '']"
+  >
     <div>
       <div class="logo">
         <div class="logo-img" :class="{ dark: themeStore.isDarkMode }"></div>
@@ -96,6 +99,13 @@ const boardStore = useBoardStore()
 const themeStore = useThemeStore()
 const isDialogVisible = ref(false)
 
+const props = defineProps({
+  isDropdown: {
+    type: Boolean,
+    default: false
+  }
+})
+
 const newBoard = ref<Board>({
   name: '',
   columns: [
@@ -162,6 +172,30 @@ const openDialog = () => {
 
   @media (max-width: 800px) {
     display: none;
+
+    &.mobile-dropdown {
+      display: block !important;
+      height: max-content;
+      border-radius: 8px;
+      box-shadow:
+        rgba(0, 0, 0, 0.25) 0px 54px 55px,
+        rgba(0, 0, 0, 0.12) 0px -12px 30px,
+        rgba(0, 0, 0, 0.12) 0px 4px 6px,
+        rgba(0, 0, 0, 0.17) 0px 12px 13px,
+        rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+      .logo-img {
+        display: none;
+      }
+
+      .hide-sidebar-btn {
+        display: none !important;
+      }
+
+      .board-list {
+        margin-bottom: 1rem;
+      }
+    }
   }
 
   &.active {
