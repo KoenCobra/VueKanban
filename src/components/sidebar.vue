@@ -27,7 +27,7 @@
             {{ board.name }}
           </li>
         </ul>
-        <button class="new-board-btn" @click="openDialog">
+        <button class="new-board-btn" @click="boardStore.isAddBoardVisible = true">
           <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M0 2.889A2.889 2.889 0 0 1 2.889 0H13.11A2.889 2.889 0 0 1 16 2.889V13.11A2.888 2.888 0 0 1 13.111 16H2.89A2.889 2.889 0 0 1 0 13.111V2.89Zm1.333 5.555v4.667c0 .859.697 1.556 1.556 1.556h6.889V8.444H1.333Zm8.445-1.333V1.333h-6.89A1.556 1.556 0 0 0 1.334 2.89V7.11h8.445Zm4.889-1.333H11.11v4.444h3.556V5.778Zm0 5.778H11.11v3.11h2a1.556 1.556 0 0 0 1.556-1.555v-1.555Zm0-7.112V2.89a1.555 1.555 0 0 0-1.556-1.556h-2v3.111h3.556Z"
@@ -53,51 +53,15 @@
   >
     <img src="../assets/images/icon-show-sidebar.svg" alt="" />
   </button>
-
-  <GenericDialog
-    :header="'Add New Board'"
-    :is-dialog-visible="isDialogVisible"
-    @close="isDialogVisible = false"
-  >
-    <Form @submit="onSubmit" :validation-schema="schema" class="form-body">
-      <GenericInput
-        placeholder="e.g. Web Design"
-        :autofocus="true"
-        label="Board Name"
-        name="name"
-      />
-      <div class="columns">
-        <label>Board Columns</label>
-        <TransitionGroup name="list">
-          <div v-for="(column, index) of newBoard.columns" :key="index" class="column-input">
-            <input v-model="column.name" />
-            <img src="../assets/images/icon-cross.svg" @click="newBoard.columns.splice(index, 1)" />
-          </div>
-        </TransitionGroup>
-        <button type="button" @click="addColumn()" class="add-column-btn">+ Add New Column</button>
-      </div>
-      <button class="submit-btn" type="submit">Create New Board</button>
-    </Form>
-  </GenericDialog>
 </template>
 
 <script setup lang="ts">
 import ThemeSwitcher from '@/components/theme-switcher.vue'
 import { useThemeStore } from '@/stores/themeStore'
-import { ref } from 'vue'
 import { useBoardStore } from '@/stores/boardStore'
-import GenericDialog from '@/components/generic-dialog.vue'
-import * as Yup from 'yup'
-import { Form } from 'vee-validate'
-import GenericInput from './generic-input.vue'
-import type { Board } from '@/interfaces/board'
-import { useToast } from 'primevue/usetoast'
-
-const toast = useToast()
 
 const boardStore = useBoardStore()
 const themeStore = useThemeStore()
-const isDialogVisible = ref(false)
 
 const props = defineProps({
   isDropdown: {
@@ -105,54 +69,6 @@ const props = defineProps({
     default: false
   }
 })
-
-const newBoard = ref<Board>({
-  name: '',
-  columns: [
-    { name: 'ToDo', tasks: [], color: '' },
-    { name: 'Doing', tasks: [], color: '' }
-  ]
-})
-
-const addColumn = () => {
-  newBoard.value.columns.push({ name: '' })
-}
-
-const schema = Yup.object().shape({
-  name: Yup.string().required(`Can't be empty`)
-})
-
-const onSubmit = (values: any) => {
-  for (let board of boardStore.boards) {
-    if (board.name === values.name) {
-      toast.add({
-        severity: 'info',
-        detail: 'there is already a board with the name: ' + values.name,
-        life: 3000
-      })
-      return
-    }
-  }
-
-  newBoard.value.name = values.name
-  boardStore.boards.push(newBoard.value)
-  isDialogVisible.value = false
-
-  if (!boardStore.selectedBoard) {
-    boardStore.selectedBoard = boardStore.boards[0]
-  }
-}
-
-const openDialog = () => {
-  newBoard.value = {
-    name: '',
-    columns: [
-      { name: 'ToDo', tasks: [], color: '' },
-      { name: 'Doing', tasks: [], color: '' }
-    ]
-  }
-  isDialogVisible.value = true
-}
 </script>
 
 <style scoped lang="scss">

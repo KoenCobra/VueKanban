@@ -184,13 +184,6 @@ const handleClickOutside = (event: any) => {
 
 const handleClickOutsideBoardsDropdown = (event: any) => {
   if (
-    event.target.classList.contains('new-board-btn') ||
-    dropdownBoards.value.contains(event.target)
-  ) {
-    return
-  }
-
-  if (
     dropdownBoards.value &&
     !dropdownBoards.value.contains(event.target) &&
     isMobileBoardsVisible.value

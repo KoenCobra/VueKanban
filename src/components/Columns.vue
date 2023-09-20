@@ -306,7 +306,7 @@ onUnmounted(() => {
       padding-left: 1.5rem;
     }
     .task {
-      margin: 0 1.5rem 1.5rem 0;
+      margin: 0 1.5rem 1.2rem 0;
       border-radius: 8px;
       background-color: var(--darkGreyBackground);
       box-shadow: 0px 4px 6px 0px rgba(54, 78, 126, 0.1);
