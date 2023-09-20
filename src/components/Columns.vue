@@ -282,6 +282,10 @@ onUnmounted(() => {
   display: flex;
   height: calc(100vh - 94.5px);
   overflow: auto;
+
+  @media (max-width: 700px) {
+    width: 100vw !important;
+  }
   .column {
     min-width: 280px;
     max-width: 280px;
