@@ -260,11 +260,12 @@ onUnmounted(() => {
   padding: 1.55rem;
   display: flex;
   gap: 1.5rem;
-  overflow: auto;
   height: calc(100vh - 94.5px);
-  width: calc(100vw - 18.75rem);
+  width: 100vw;
+  overflow: auto;
   .column {
-    width: 280px;
+    min-width: 280px;
+    max-width: 280px;
     .column-name {
       margin-bottom: 1.25rem;
       display: flex;
@@ -315,7 +316,8 @@ onUnmounted(() => {
     display: grid;
     place-items: center;
     margin-top: 39px;
-    width: 280px;
+    min-width: 280px;
+    max-width: 280px;
     max-height: 814px;
     border-radius: 6px;
     background: var(--addColumnBackGround);
