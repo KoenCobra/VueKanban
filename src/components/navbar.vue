@@ -199,8 +199,6 @@ const onNewTaskSubmit = (values: any) => {
     status: selectedStatus.value.name
   }
 
-  console.log(createdTask)
-
   column?.tasks?.push(createdTask)
   isNewTaskVisible.value = false
   task.value = {

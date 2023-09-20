@@ -15,9 +15,9 @@
         <div :style="`background-color: ${column.color};`" class="column-color"></div>
         <p>{{ column.name }} ({{ column.tasks?.length }})</p>
       </div>
-      <draggable class="tasks" :list="column.tasks" group="people" itemKey="title" :animation="300">
+      <draggable class="tasks" :list="column.tasks" group="tasks" itemKey="name" :animation="300">
         <template #item="{ element }">
-          <div @click="openTask(element)" class="task">
+          <div @click="openTask(element, column)" class="task">
             <p>{{ element.title }}</p>
             <p class="subtask-number">
               ({{ element.subtasks?.filter((s: any) => s.isCompleted).length }} of
@@ -162,7 +162,7 @@ import * as Yup from 'yup'
 const boardStore = useBoardStore()
 const isTaskVisible = ref(false)
 const selectedStatus = ref()
-const selectedTask = ref()
+const selectedTask = ref<Task>({} as Task)
 const isCrudDropdownVisble = ref(false)
 const isEditTaskVisible = ref(false)
 const isDeleteTaskConfirmationVisible = ref(false)
@@ -174,10 +174,11 @@ watchEffect(() => {
   })
 })
 
-const openTask = (task: Task) => {
+const openTask = (task: Task, column: any) => {
   isTaskVisible.value = true
   selectedTask.value = task
-  selectedStatus.value = boardStore.selectedBoard?.columns.find((c) => c.name === task.status)
+
+  selectedStatus.value = column
 }
 
 const changeStatus = (event: any) => {
