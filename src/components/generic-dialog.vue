@@ -49,13 +49,13 @@ const handleClick = (event: any) => {
   background-color: rgba(0, 0, 0, 0.5);
   display: grid;
   place-items: center;
-  z-index: 1;
+  z-index: 2;
   color: var(--textColor);
 
   .dialog {
     background-color: var(--dialogBackground);
     width: 480px;
-    z-index: 2;
+    z-index: 3;
     padding: 2rem;
     border-radius: 6px;
     position: relative;

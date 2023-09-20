@@ -278,22 +278,25 @@ onUnmounted(() => {
 @import '@/assets/sass/variables.scss';
 
 .columns-section {
-  padding: 1.55rem;
+  padding: 0 1.55rem 0;
   display: flex;
-  gap: 1.5rem;
   height: calc(100vh - 94.5px);
   overflow: auto;
   .column {
     min-width: 280px;
     max-width: 280px;
     .column-name {
-      margin-bottom: 1.25rem;
+      padding: 1.55rem 0;
       display: flex;
       align-items: center;
       gap: 0.75rem;
       font-size: 0.75rem;
       font-weight: 700;
       letter-spacing: 2.4px;
+      position: sticky;
+      top: 0;
+      background-color: var(--bodyBackground);
+      z-index: 1;
       .column-color {
         background-color: greenyellow;
         border-radius: 50%;
@@ -307,10 +310,10 @@ onUnmounted(() => {
     .tasks {
       display: flex;
       flex-direction: column;
-      gap: 1.25rem;
       min-height: 20rem;
     }
     .task {
+      margin: 0 1.5rem 1.5rem 0;
       border-radius: 8px;
       background-color: var(--darkGreyBackground);
       box-shadow: 0px 4px 6px 0px rgba(54, 78, 126, 0.1);
@@ -335,7 +338,7 @@ onUnmounted(() => {
   .add-column {
     display: grid;
     place-items: center;
-    margin-top: 39px;
+    margin-top: 4.2rem;
     min-width: 280px;
     max-width: 280px;
     max-height: 814px;
