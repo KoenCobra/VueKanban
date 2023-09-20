@@ -5,9 +5,15 @@
         <div class="logo" v-if="!boardStore.isSideBarVisible">
           <div class="logo-img" :class="{ dark: themeStore.isDarkMode }"></div>
         </div>
-        <div class="board-name">
+        <div @click="isMobileBoardsVisible = !isMobileBoardsVisible" class="board-name">
           <img src="../assets/images/logo-mobile.svg" alt="" />
           <h1>{{ boardStore.selectedBoard?.name }}</h1>
+          <img
+            v-if="!isMobileBoardsVisible"
+            src="../assets/images/icon-chevron-down.svg"
+            alt="down"
+          />
+          <img v-else src="../assets/images/icon-chevron-up.svg" alt="down" />
         </div>
       </div>
     </div>
@@ -25,12 +31,10 @@
         <img src="../assets/images/icon-vertical-ellipsis.svg" alt="ellipsis" />
       </button>
 
-      <Transition>
-        <div v-if="isCrudDropdownVisble" class="crud-dropdown">
-          <p @click="boardStore.isEditBoardVisible = true">Edit Board</p>
-          <p @click="isDeleteBoardConfirmationVisible = true" class="delete-text">Delete Board</p>
-        </div>
-      </Transition>
+      <div v-if="isCrudDropdownVisble" class="crud-dropdown">
+        <p @click="boardStore.isEditBoardVisible = true">Edit Board</p>
+        <p @click="isDeleteBoardConfirmationVisible = true" class="delete-text">Delete Board</p>
+      </div>
     </div>
   </div>
 
@@ -141,6 +145,7 @@ import { useThemeStore } from '@/stores/themeStore'
 
 const isCrudDropdownVisble = ref(false)
 const isDeleteBoardConfirmationVisible = ref(false)
+const isMobileBoardsVisible = ref(false)
 const isNewTaskVisible = ref(false)
 const dropdownToggleBtn = ref()
 const boardStore = useBoardStore()
