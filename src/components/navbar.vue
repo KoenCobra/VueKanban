@@ -288,6 +288,10 @@ onUnmounted(() => {
         align-items: center;
         gap: 0.8rem;
 
+        @media (min-width: 800px) {
+          pointer-events: none;
+        }
+
         img {
           @media (min-width: 800px) {
             display: none;
@@ -308,6 +312,10 @@ onUnmounted(() => {
         position: absolute;
         top: 9%;
         z-index: 9;
+
+        @media (min-width: 800px) {
+          display: none;
+        }
       }
     }
 

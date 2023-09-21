@@ -97,7 +97,7 @@ const openAddBoardDialog = () => {
     display: none;
 
     &.mobile-dropdown {
-      display: block !important;
+      display: block;
       height: max-content;
       border-radius: 8px;
       box-shadow:
