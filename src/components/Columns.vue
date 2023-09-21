@@ -63,7 +63,7 @@
           v-for="(subtask, index) in selectedTask.subtasks"
           :key="index"
         >
-          <Checkbox v-model="subtask.isCompleted" :binary="true" />
+          <Checkbox @change="updateSubtask()" v-model="subtask.isCompleted" :binary="true" />
           <label> {{ subtask.title }} </label>
         </div>
       </div>
@@ -77,7 +77,7 @@
           @change="changeStatus($event)"
         />
       </div>
-      <button @click="isTaskVisible = false" class="submit-btn" type="submit">Save Changes</button>
+      <!-- <button @click="isTaskVisible = false" class="submit-btn" type="submit">Save Changes</button> -->
     </div>
   </GenericDialog>
 
@@ -167,6 +167,43 @@ const isCrudDropdownVisble = ref(false)
 const isEditTaskVisible = ref(false)
 const isDeleteTaskConfirmationVisible = ref(false)
 const dropdownToggleBtn = ref()
+
+const updateSubtask = () => {
+  const completedCount = selectedTask.value.subtasks.filter((s: any) => s.isCompleted).length
+  const totalSubtasks = selectedTask.value.subtasks.length
+
+  let targetColumnIndex = 0 // Default to the first column
+  if (completedCount === 0) {
+    targetColumnIndex = 0 // First column if no subtasks are completed
+  } else if (completedCount < totalSubtasks) {
+    targetColumnIndex = 1 // Second column if not all but at least one subtask is completed
+  } else if (completedCount === totalSubtasks) {
+    targetColumnIndex = 2 // Third column if all subtasks are completed
+  }
+
+  selectedStatus.value = boardStore.selectedBoard?.columns[targetColumnIndex]
+
+  // Find and remove the task from its current column
+  const currentColumn = boardStore.selectedBoard?.columns.find(
+    (c) => c.tasks?.includes(selectedTask.value)
+  )
+  if (currentColumn && currentColumn.tasks) {
+    const taskIndex = currentColumn.tasks.indexOf(selectedTask.value)
+    if (taskIndex > -1) {
+      currentColumn.tasks.splice(taskIndex, 1)
+    }
+  }
+
+  // Add the task to the target column
+  const newColumn = boardStore.selectedBoard?.columns[targetColumnIndex]
+  if (newColumn) {
+    if (newColumn.tasks) {
+      newColumn.tasks.push(selectedTask.value)
+    } else {
+      newColumn.tasks = [selectedTask.value]
+    }
+  }
+}
 
 watchEffect(() => {
   boardStore.selectedBoard?.columns.forEach((column) => {

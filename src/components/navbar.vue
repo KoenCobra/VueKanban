@@ -15,7 +15,7 @@
           <img
             v-if="!isMobileBoardsVisible"
             src="../assets/images/icon-chevron-down.svg"
-            alt="down"
+            alt="up"
           />
           <img v-else src="../assets/images/icon-chevron-up.svg" alt="down" />
         </div>
