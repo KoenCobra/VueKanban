@@ -38,7 +38,7 @@
 <script setup lang="ts">
 import Navbar from '@/components/navbar.vue'
 import Sidebar from '@/components/sidebar.vue'
-import Columns from './components/columns.vue'
+import Columns from '@/components/columns.vue'
 import { useThemeStore } from '@/stores/themeStore'
 import { useBoardStore } from '@/stores/boardStore'
 import { onMounted, ref } from 'vue'
