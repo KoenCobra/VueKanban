@@ -1,6 +1,6 @@
 <template>
   <main :class="{ dark: themeStore.isDarkMode }">
-    <Sidebar />
+    <Sidebar @openAddBoardDialog="openDialog" />
     <div class="main-layout">
       <Navbar />
       <Columns />
