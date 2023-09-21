@@ -76,7 +76,7 @@ const onSubmit = (values: any) => {
     if (board.name === values.name) {
       toast.add({
         severity: 'info',
-        detail: 'there is already a board with the name: ' + values.name,
+        detail: 'There is already a board with the name: ' + values.name,
         life: 3000
       })
       return
